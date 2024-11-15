@@ -1,0 +1,184 @@
+/* Navbar general */
+
+.logo{
+  width: 100px ;
+  height: 60px ;
+  margin-right: 60px;
+}
+
+.navegador{
+  margin-left: 60px;
+}
+
+.menu-container {
+  display: flex;
+  flex-direction: row; /* Alineación horizontal */
+  flex-wrap: nowrap; /* Evita que se dividan en líneas */
+  align-items: center;       /* Alinea los elementos verticalmente en el centro */
+  justify-content: center;  
+}
+
+.menu-item {
+  font-size: 15px !important;
+  color: black !important;
+  margin-left: 20px;
+  text-align: center;
+}
+
+.navbar-search-cart{
+  margin-left: 100px;
+}
+
+.dropdown {
+  font-size: 15px !important;
+  color: black !important;
+  display: flex;
+  align-items: center;       /* Alinea los elementos verticalmente en el centro */
+  justify-content: center;  
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu {
+  display: none;
+}
+
+.dropdown-toggle {
+  color: black !important;
+}
+
+.dropdown-toggle:focus, 
+.dropdown-toggle:active {
+  color: black !important;
+  background-color: transparent !important; 
+}
+
+/* carrito */
+
+.cart-icon {
+  position: relative;
+  font-size: 26px;
+  color: black; /* Color del ícono */
+  margin-left: 70px;
+}
+
+.cart-count {
+  position: absolute;
+  top: -15px;   /* Posición del badge */
+  right: -10px; /* Posición del badge */
+  background-color: rgb(90, 90, 90);
+  color: white;
+  border-radius: 70%;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+
+/* Search & Cart */
+.navbar-search-cart {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.search-icon {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.search-input {
+  border: 3px solid #000000;
+  border-radius: 10px;
+  padding: 10px;
+  margin-right: 15px;
+}
+
+.dynamic-text-bar {
+  background-color: #1b3731; /* Color verde */
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  overflow: hidden; /* Oculta el texto que sale fuera de la caja */
+  position: relative;
+  height: 40px; /* Ajusta la altura si es necesario */
+}
+
+.animated-text {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  animation: slideInOut 5s ease-in-out infinite; /* Ajustado a 6 segundos */
+}
+
+@keyframes slideInOut {
+  0% {
+    transform: translateX(100%); /* Comienza fuera de la pantalla a la derecha */
+    opacity: 0;
+  }
+  15% {
+    transform: translateX(0); /* Se mueve al centro con velocidad moderada */
+    opacity: 1;
+  }
+  55% {
+    transform: translateX(0); /* Se queda en el centro por 3 segundos */
+    opacity: 1;
+  }
+  70% {
+    transform: translateX(-100%); /* Sale hacia la izquierda rápidamente */
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-100%); /* Termina fuera de la pantalla a la izquierda */
+    opacity: 0;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar-container {
+    flex-direction: column;
+  }
+
+  .navbar-menu {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .navbar-menu.open {
+    display: flex;
+  }
+
+  .navbar-menu ul {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .menu-item {
+    margin: 10px 0;
+  }
+
+  .navbar-search-cart {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+
+  .search-input {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px 40px 5px 10px; /* Añadir espacio a la derecha para el ícono */
+    width: 100%;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+ 
+}

@@ -1,0 +1,144 @@
+.table-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .filter-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .search-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 10px 40px 10px 15px; /* Espacio para el ícono */
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: #888;
+  }
+  
+  .category-select {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+  }
+  
+  .responsive-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .responsive-table th,
+  .responsive-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .responsive-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .btn-edit,
+  .btn-delete {
+    padding: 8px 16px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .btn-edit {
+    background-color: #4caf50; /* Color verde para Editar */
+    
+  }
+  
+  .btn-delete {
+    background-color: #000000; /* Color rojo para Eliminar */
+  }
+
+  
+  
+  /* Responsive para tablet */
+  @media (max-width: 768px) {
+    .responsive-table th, .responsive-table td {
+      padding: 10px;
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* Responsive para mobile */
+  @media (max-width: 480px) {
+    .responsive-table th, .responsive-table td {
+      padding: 8px;
+      font-size: 0.8rem;
+    }
+  
+    .btn-edit,
+    .btn-delete {
+      padding: 6px 12px;
+      font-size: 0.8rem;
+    }
+  }
+
+
+  .pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.pagination button.active {
+    background-color: #007bff;
+    color: white;
+}
+
+
+.boton-editar{
+ margin: 5px;
+}
+
+.botones-acciones{
+  display: flex;
+  flex-direction: row;
+
+}
+
+.tabla-completa{
+  margin: 30px;
+}
+
+.boton-agregar{
+  width: 300px;
+  margin-left: 500px;
+  margin-bottom: 15px;
+  height: 50px;
+  font-size: 25px;
+}
+
+.encabezado-admin{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+

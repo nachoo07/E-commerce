@@ -1,0 +1,121 @@
+.all-products-page {
+    display: flex;
+  }
+  
+  .sidebar-filtros {
+    width: 250px;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-right: 1px solid #ddd;
+  }
+  
+  .sidebar-filtros h3 {
+    margin-bottom: 15px;
+    font-size: 1.2em;
+  }
+  
+  .sidebar-filtros ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar-filtros ul li {
+    cursor: pointer;
+    padding: 5px 0;
+    color: #333;
+  }
+  
+  .sidebar-filtros ul li:hover {
+    color: #007bff;
+  }
+  
+  .product-cards-container {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    
+  }
+
+  .product-cards-container .card {
+    border: none;
+    box-shadow: none ;
+  }
+  .card {
+    width: 200px;
+    text-align: center;
+    position: relative;
+    margin: 0px;
+  }
+
+  .card-link{
+    margin: 10px;
+    width: 200px;
+    height: auto ;
+    
+  }
+  
+  .discount-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background-color: #560909;
+    color: rgb(199, 37, 37);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+
+  
+  .card-title {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 8px;
+
+  }
+
+  .card-link, .card-title, .discounted-price {
+    text-decoration: none; /* Quita el subrayado */
+    text-transform: uppercase; /* Convierte a mayúsculas*/
+    text-align:left;
+  }
+  
+  .original-price {
+    font-size: 14px;
+    color: #999;
+    text-decoration: line-through;
+    margin: 0;
+  }
+  
+  .discounted-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+    margin: 4px 0 16px 0;
+  }
+
+  .card-img-top {
+    width: 200px !important; /* Ajusta al ancho completo de la tarjeta */
+  height: 200px; /* Establece la altura fija que desees */
+  object-fit: cover; /* Mantiene la proporción de la imagen y recorta si es necesario */
+  }
+  
+  .btn {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 8px;
+  }
+  
+  .choose-options-btn {
+    background-color: #ddd;
+    color: #333;
+  }
+  
+  .buy-btn {
+    background-color: #007bff;
+    color: white;
+  }
+  

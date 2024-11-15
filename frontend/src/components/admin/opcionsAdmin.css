@@ -1,0 +1,37 @@
+/* Contenedor de tarjetas */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  /* Estilo de cada tarjeta */
+  .card-admin {
+    width: 400px;
+    margin: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Estilo de la imagen */
+  .card-admin img {
+    height: 200px; /* Tamaño fijo para la imagen */
+    object-fit: cover;
+  }
+  
+  /* Estilos responsivos */
+  @media (min-width: 768px) {
+    .card-container {
+      justify-content: space-around;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .card-container {
+      justify-content: center;
+      
+    }
+  }

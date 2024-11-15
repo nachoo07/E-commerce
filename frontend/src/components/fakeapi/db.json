@@ -1,0 +1,88 @@
+{
+  "Productos": [
+    {
+      "id": "4eb7",
+      "name": "colgante cuenca de chapa y madera 40cm blanco",
+      "description": "lampara de pie djakfreifjsh",
+      "category": "Bebidas",
+      "price": "1500",
+      "stock": "100",
+      "image": "https://mijormi.vteximg.com.br/arquivos/ids/174559-1000-1332/Lampara-colgante-de-madera-NATURAL-WOOD-Landmark-2.jpg?v=637769990168170000",
+      "image2": "https://www.greenstyle.com.ar/wp-content/uploads/2020/07/Cafetera-Market-Bra-12.jpg",
+      "image3": "https://mijormi.vteximg.com.br/arquivos/ids/174559-1000-1332/Lampara-colgante-de-madera-NATURAL-WOOD-Landmark-2.jpg?v=637769990168170000",
+      "image4": "https://mijormi.vteximg.com.br/arquivos/ids/174559-1000-1332/Lampara-colgante-de-madera-NATURAL-WOOD-Landmark-2.jpg?v=637769990168170000",
+      "featured": true
+    },
+    {
+      "id": "b5bb",
+      "name": "foco",
+      "description": "golosina",
+      "category": "Golosinas",
+      "price": "15000",
+      "stock": "145",
+      "image": "https://i.pinimg.com/564x/70/a3/4e/70a34eddb49ae43b29dd587e3b35be04.jpg",
+      "image2": "https://i.pinimg.com/564x/ee/d4/9e/eed49eea77d928ff29d3d37a36fc111b.jpg",
+      "featured": true
+    },
+    {
+      "id": "105e",
+      "name": "igna",
+      "description": "golosina",
+      "category": "Bebidas",
+      "price": "3",
+      "stock": "2",
+      "image": "https://i.pinimg.com/564x/ee/d4/9e/eed49eea77d928ff29d3d37a36fc111b.jpg",
+      "image2": "",
+      "featured": true
+    },
+    {
+      "id": "06ca",
+      "name": "julain",
+      "description": "cafeb de 500",
+      "category": "Bebidas",
+      "price": "3",
+      "stock": "2",
+      "image": "https://i.pinimg.com/564x/31/ef/7e/31ef7e5ba1112455155949eb7d41a9c8.jpg",
+      "image2": "",
+      "image3": "https://i.pinimg.com/564x/b4/00/cc/b400cc06e4e74d8f2a378ae81f248e8f.jpg",
+      "image4": "https://i.pinimg.com/564x/c6/a5/bc/c6a5bcd26a14b0164cf9f66f0db2594a.jpg",
+      "featured": true
+    },
+    {
+      "id": "11ee",
+      "name": "velador",
+      "description": "ya veo si lo saco",
+      "category": "Otros",
+      "price": "345",
+      "stock": "123",
+      "image": "https://i.pinimg.com/564x/56/71/54/567154d98bddf3c39d9142e62c9761f8.jpg",
+      "image2": "",
+      "featured": true
+    },
+    {
+      "id": "3db7",
+      "name": "foco",
+      "description": "golosina",
+      "category": "Golosinas",
+      "price": "3",
+      "stock": "2",
+      "image": "https://i.pinimg.com/564x/ca/04/99/ca049955800bb2867d4164d80c81a307.jpg",
+      "image2": "",
+      "featured": true
+    },
+    {
+      "id": "6067",
+      "name": "chupetin",
+      "description": "cafeb de 500",
+      "category": "Golosinas",
+      "price": "3",
+      "stock": "4",
+      "image": "https://www.boutiquedeluz.com/producto/lampara-de-pie-java-con-tripode-negro-y-pantalla-de-lienzo/",
+      "image2": "",
+      "featured": true
+    }
+  ],
+  "Usuarios": [
+    
+  ]
+}

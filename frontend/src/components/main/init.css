@@ -1,0 +1,105 @@
+.fotomain{
+    height: 500px;
+    width: 100%;
+}
+
+.imagen-carrusel{
+    height: 500px; /* Ajusta la altura a lo que necesites */
+
+
+}
+
+.boton-vermas{
+    margin: 0px;
+    width: 200px !important;
+    height: 40px;
+    margin-bottom: 20px;
+}
+
+.boton-ver-mas{
+    display: flex ;
+    justify-content: center;
+
+}
+
+
+/* Estilos generales para la tarjeta */
+.card {
+    width: 300px; /* Ajusta el ancho según sea necesario */
+    margin: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Contenedor de la imagen */
+.image-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.image-container img {
+    width: 100%;
+    transition: transform 0.3s ease; /* Efecto de transición para el zoom */
+}
+
+.image-container:hover img {
+    transform: scale(1.1); /* Zoom en la imagen al pasar el mouse */
+}
+
+/* Overlay para la información sobre la imagen */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease; /* Efecto de aparición */
+}
+
+.image-container:hover .overlay {
+    opacity: 1; /* Muestra el overlay al pasar el mouse */
+}
+
+.overlay h3 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.inicio-categoria{
+    margin: 50px;
+    display: flex;
+   justify-content: center;
+
+}
+
+.imagen-sola{
+    height: 100%;
+    width: 700px;
+}
+
+.inicio-categoria-dos{
+    display: flex;
+    flex-direction: column;
+    margin: 30px 0px 30px 50px;
+    justify-content: center;
+}
+
+.imagen-dos{
+    padding: 20px 20px 20px 0px;
+    width: 600px;
+    height: 300px;
+    
+}
+
+
+.texto-inicio{
+    text-align: center;
+}
+
