@@ -9,7 +9,8 @@ const ProductsContext = ({ children }) => {
 
   const obtenerProductos = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/Productos");
+      const response = await axios.get("https://e-commerce-baoo.onrender.com/");
+      console.log("Response data:", response.data);  // Log para ver la respuesta
       setProductos(response.data);
     } catch (error) {
       console.error(error);
@@ -18,7 +19,7 @@ const ProductsContext = ({ children }) => {
 
   const addProducto = async (producto) => {
     try {
-      const response = await axios.post("http://localhost:8000/Productos", producto);
+      const response = await axios.post("https://e-commerce-baoo.onrender.com/create", producto);
       setProductos([...productos, response.data]);
       Swal.fire("¡Éxito!", "El producto ha sido creado correctamente", "success");
       obtenerProductos();
@@ -30,7 +31,7 @@ const ProductsContext = ({ children }) => {
 
   const getCategoria = async (category) => {
     try {
-      const response = await axios.get(`http://localhost:8000/Productos?category=${category}`);
+      const response = await axios.get(`https://e-commerce-baoo.onrender.com/?category=${category}`);
       setProductos(response.data);
     } catch (error) {
       console.error("Error al obtener productos por categoría:", error);
@@ -51,7 +52,7 @@ const ProductsContext = ({ children }) => {
       });
 
       if (confirmacion.isConfirmed) {
-        await axios.delete(`http://localhost:8000/Productos/${id}`);
+        await axios.delete(`https://e-commerce-baoo.onrender.com/delete/${id}`);
         setProductos(productos.filter((producto) => producto.id !== id));
         Swal.fire("¡Eliminado!", "El producto ha sido eliminado correctamente", "success");
       }
@@ -63,7 +64,7 @@ const ProductsContext = ({ children }) => {
 
   const updateProductos = async (producto) => {
     try {
-      await axios.put(`http://localhost:8000/Productos/${producto.id}`, producto);
+      await axios.put(`https://e-commerce-baoo.onrender.com/update/${producto.id}`, producto);
       await obtenerProductos();
       Swal.fire("¡Éxito!", "El producto ha sido actualizado correctamente", "success");
     } catch (error) {

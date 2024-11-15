@@ -7,7 +7,7 @@ import logo from '../../assets/logo.png';
 import { useState, useEffect, useContext } from 'react';
 import CardIcon from '../carrito/CardIcon/CardIcon';
 import { BsFillPersonFill } from "react-icons/bs";
-import LoginDrawer from '../login/Login';
+//import LoginDrawer from '../login/Login';
 
 
 const Navigator = () => {

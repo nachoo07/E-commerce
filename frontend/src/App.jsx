@@ -6,12 +6,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ProductosContext from './context/productos/ProductsContext';
 import CarritoProvider from './context/carrito/CarritoContext';
 import ScrollToTop from './components/scrollToTop/ScrollToTop';
-import  UsersProvider  from './context/users/UsersContext';
+//import  UsersProvider  from './context/users/UsersContext';
 
 function App() {
   return (
     <>
-    <UsersProvider>
+    
         <CarritoProvider>
           <ProductosContext>
             <Navigator />
@@ -20,7 +20,7 @@ function App() {
             <ScrollToTop />
           </ProductosContext>
         </CarritoProvider>
-     </UsersProvider>  
+   
     </>
   );
 }

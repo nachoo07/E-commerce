@@ -5,9 +5,9 @@ import ProductDetail from '../productDetail/ProductDetail';
 import AllProducts from '../../pages/products/AllProducts';
 import FaqPage from '../../pages/FaqPage/FaqPage';
 import PageInit from '../../pages/main/PageInit';
-import Login from '../login/Login';
+//import Login from '../login/Login';
 import ProductsAdmin from '../products/admin/ProductsAdmin';
-import UsersAdmin from '../users/UsersAdmin';
+//import UsersAdmin from '../users/UsersAdmin';
 
 
 const Routing = () => {
@@ -19,9 +19,9 @@ const Routing = () => {
             <Route path='/faqpage' element={<FaqPage/>}/> 
             <Route path='/product/:id' element={<ProductDetail/>}/> 
             <Route path='/product' element={<AllProducts/>}/> 
-            <Route path='/login' element={<Login/>}/> 
+            
             <Route path="/ruta1" element={<ProductsAdmin/>} />
-            <Route path="/ruta2" element={<UsersAdmin/>} />
+            
             <Route path="/ruta3" element={<ProductsAdmin/>} />
             <Route path="/ruta4" element={<ProductsAdmin/>} />
             <Route path="/ruta5" element={<ProductsAdmin/>} />
