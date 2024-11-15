@@ -53,7 +53,7 @@ const ProductsContext = ({ children }) => {
 
       if (confirmacion.isConfirmed) {
         await axios.delete(`https://e-commerce-baoo.onrender.com/delete/${id}`);
-        setProductos(productos.filter((producto) => producto.id !== id));
+        setProductos(productos.filter((producto) => producto._id !== id));
         Swal.fire("¡Eliminado!", "El producto ha sido eliminado correctamente", "success");
       }
     } catch (error) {

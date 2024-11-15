@@ -17,11 +17,11 @@ export const getAllProducts = async (req, res) => {
 
 
 export const createProduct = async (req, res) => {
-    const { name, category, price, image } = req.body;
+    const { name, category, description, stock, price, image, image2, image3, image4 } = req.body;
 
     try {
         // Crear nuevo producto
-        const newProduct = await Product.create({ name, category, price, image });
+        const newProduct = await Product.create({ name, category,description, stock, price, image, image2, image3, image4 });
 
         res.status(201).json({
             message: "El producto se agregó exitosamente",
@@ -32,30 +32,36 @@ export const createProduct = async (req, res) => {
     }
 }
 
+import mongoose from 'mongoose';
+
 export const deleteProduct = async (req, res) => {
-    const { id } = req.params;
+  const { id } = req.params;
 
-    try {
-        const deletedProduct = await Product.findByIdAndDelete(id);
-
-        if (!deletedProduct) {
-            return res.status(404).json({ message: "Producto no encontrado" });
-        }
-
-        res.status(200).json({ message: "Producto eliminado exitosamente" });
-    } catch (error) {
-        return res.status(500).json({ message: error.message });
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "ID inválido" });
     }
-}
+
+    const deletedProduct = await Product.findByIdAndDelete(id);
+
+    if (!deletedProduct) {
+      return res.status(404).json({ message: "Producto no encontrado" });
+    }
+
+    res.status(200).json({ message: "Producto eliminado exitosamente" });
+  } catch (error) {
+    console.error(error); // Esto ayudará a identificar errores específicos en los logs
+    return res.status(500).json({ message: "Error al eliminar el producto" });
+  }
+};
 
 export const updateProduct = async (req, res) => {
     const { id } = req.params;
-    const { name, category, price, image } = req.body;
-
+    const { name, category, description, stock, price, image, image2, image3, image4 } = req.body;
     try {
         const updatedProduct = await Product.findByIdAndUpdate(
             id,
-            { name, category, price, image },
+            { name, category, description, stock, price, image, image2, image3, image4 },
             { new: true } // Para devolver el producto actualizado
         );
 

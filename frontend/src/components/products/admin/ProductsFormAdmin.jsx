@@ -10,7 +10,9 @@ const ProductsFormAdmin = ({ producto, setProducto, handleClose, onSubmit }) => 
         price: "",
         stock: "",
         image: "",
-        image2: ""
+        image2: "",
+        image3: "",
+        image4: ""
     });
 
     useEffect(() => {
@@ -21,7 +23,9 @@ const ProductsFormAdmin = ({ producto, setProducto, handleClose, onSubmit }) => 
             price: "",
             stock: "",
             image: "",
-            image2: ""
+            image2: "",
+            image3: "",
+            image4: ""
         });
     }, [producto]);
 
@@ -130,7 +134,7 @@ const ProductsFormAdmin = ({ producto, setProducto, handleClose, onSubmit }) => 
                     <Form.Control type="text"
                         value={nuevoProducto.image3}
                         onChange={handleChange}
-                        name='image3'
+                        name='image2'
                         placeholder="Imagen del Producto" />
                     <Form.Text id="basic-addon4">
                         Debe ingresar un enlace válido a una imagen (formatos admitidos: jpg, jpeg, gif, png, bmp).
@@ -141,7 +145,7 @@ const ProductsFormAdmin = ({ producto, setProducto, handleClose, onSubmit }) => 
                     <Form.Control type="text"
                         value={nuevoProducto.image4}
                         onChange={handleChange}
-                        name='image4'
+                        name='image3'
                         placeholder="Imagen del Producto" />
                     <Form.Text id="basic-addon4">
                         Debe ingresar un enlace válido a una imagen (formatos admitidos: jpg, jpeg, gif, png, bmp).

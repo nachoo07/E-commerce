@@ -112,7 +112,7 @@ const ProductsAdmin = () => {
               </td>
               <td className='botones-acciones'>
                 <Button variant="info" className='boton-editar' onClick={() => handleEdit(producto)}>Editar</Button>
-                <Button variant="danger" className='boton-editar' onClick={() => deleteProductos(producto.id)}>Eliminar</Button>
+                <Button variant="danger" className='boton-editar' onClick={() => deleteProductos(producto._id)}>Eliminar</Button>
               </td>
             </tr>
           ))}
