@@ -1,4 +1,4 @@
-
+import mongoose from 'mongoose';
 import  Product  from "../models/product.model.js"
 
 export const getAllProducts = async (req, res) => {
@@ -17,22 +17,23 @@ export const getAllProducts = async (req, res) => {
 
 
 export const createProduct = async (req, res) => {
-    const { name, category, description, stock, price, image, image2, image3, image4 } = req.body;
-
+    const { name, category, description, stock, price, image, image2, image3} = req.body;
+    console.log("Datos recibidos del frontend:", req.body);
+    console.log("Datos recibidos:", req.body);
     try {
         // Crear nuevo producto
-        const newProduct = await Product.create({ name, category,description, stock, price, image, image2, image3, image4 });
-
+        const newProduct = await Product.create({ name, category,description, stock, price, image, image2, image3 });
+        const savedProduct = await newProduct.save();
         res.status(201).json({
             message: "El producto se agregó exitosamente",
-            product: newProduct // Devuelvo el producto creado
+            product: savedProduct // Devuelvo el producto creado
         });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
 }
 
-import mongoose from 'mongoose';
+
 
 export const deleteProduct = async (req, res) => {
   const { id } = req.params;
@@ -57,11 +58,11 @@ export const deleteProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
     const { id } = req.params;
-    const { name, category, description, stock, price, image, image2, image3, image4 } = req.body;
+    const { name, category, description, stock, price, image, image2, image3 } = req.body;
     try {
         const updatedProduct = await Product.findByIdAndUpdate(
             id,
-            { name, category, description, stock, price, image, image2, image3, image4 },
+            { name, category, description, stock, price, image, image2, image3 },
             { new: true } // Para devolver el producto actualizado
         );
 

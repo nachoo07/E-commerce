@@ -38,6 +38,7 @@ const ProductsFormAdmin = ({ producto, setProducto, handleClose, onSubmit }) => 
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log("Datos enviados:", nuevoProducto);
         onSubmit(nuevoProducto);
         handleClose();
     };
@@ -132,7 +133,7 @@ const ProductsFormAdmin = ({ producto, setProducto, handleClose, onSubmit }) => 
                 <Form.Group className="mb-5" >
                     <Form.Label>Imagen 3</Form.Label>
                     <Form.Control type="text"
-                        value={nuevoProducto.image3}
+                        value={nuevoProducto.image2}
                         onChange={handleChange}
                         name='image2'
                         placeholder="Imagen del Producto" />
@@ -143,7 +144,7 @@ const ProductsFormAdmin = ({ producto, setProducto, handleClose, onSubmit }) => 
                 <Form.Group className="mb-5" >
                     <Form.Label>Imagen 4</Form.Label>
                     <Form.Control type="text"
-                        value={nuevoProducto.image4}
+                        value={nuevoProducto.image3}
                         onChange={handleChange}
                         name='image3'
                         placeholder="Imagen del Producto" />
@@ -151,6 +152,17 @@ const ProductsFormAdmin = ({ producto, setProducto, handleClose, onSubmit }) => 
                         Debe ingresar un enlace válido a una imagen (formatos admitidos: jpg, jpeg, gif, png, bmp).
                     </Form.Text>
                 </Form.Group>
+                <Form.Group className="mb-5" >
+    <Form.Label>Imagen 4</Form.Label>
+    <Form.Control type="text"
+        value={nuevoProducto.image4}
+        onChange={handleChange}
+        name='image4'
+        placeholder="Imagen del Producto" />
+    <Form.Text id="basic-addon4">
+        Debe ingresar un enlace válido a una imagen (formatos admitidos: jpg, jpeg, gif, png, bmp).
+    </Form.Text>
+</Form.Group>
             <Button type="submit">
                 {producto ? "Actualizar Producto" : "Agregar Producto"}
             </Button>

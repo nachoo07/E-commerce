@@ -20,6 +20,7 @@ const ProductsContext = ({ children }) => {
   const addProducto = async (producto) => {
     try {
       const response = await axios.post("https://e-commerce-baoo.onrender.com/create", producto);
+      console.log("Response data:", response.data);  // Log para ver la respuesta
       setProductos([...productos, response.data]);
       Swal.fire("¡Éxito!", "El producto ha sido creado correctamente", "success");
       obtenerProductos();
