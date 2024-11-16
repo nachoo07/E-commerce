@@ -2,38 +2,42 @@ import { useEffect, useState, createContext } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export const ProductsProvider = createContext();
+export const ProductsContext = createContext();
 
-const ProductsContext = ({ children }) => {
+console.log("Lista de productos:", ProductsContext);
+
+const ProductsProvider = ({ children }) => {
+
   const [productos, setProductos] = useState([]);
 
   const obtenerProductos = async () => {
     try {
-      const response = await axios.get("https://e-commerce-baoo.onrender.com/");
-      console.log("Response data:", response.data);  // Log para ver la respuesta
+      const response = await axios.get("https://e-commerce-adzq.onrender.com/");
+      console.log("Response data:", response.data);  // Verifica la respuesta
       setProductos(response.data);
     } catch (error) {
-      console.error(error);
+      console.error("Error obteniendo productos:", error);
     }
   };
 
   const addProducto = async (producto) => {
     try {
-      const response = await axios.post("https://e-commerce-baoo.onrender.com/create", producto);
-      console.log("Response data:", response.data);  // Log para ver la respuesta
-      setProductos([...productos, response.data]);
+      const response = await axios.post("https://e-commerce-adzq.onrender.com/create", producto);
+      console.log("Response data:", response.data);
+      setProductos((prevProductos) => [...prevProductos, response.data]);  // Usamos la actualización basada en el estado anterior
       Swal.fire("¡Éxito!", "El producto ha sido creado correctamente", "success");
-      obtenerProductos();
+      obtenerProductos();  // No es necesario volver a obtener los productos después de añadir uno nuevo
     } catch (error) {
-      console.log(error);
+      console.error("Error al crear el producto:", error);
       Swal.fire("¡Error!", "Ha ocurrido un error al crear el producto", "error");
     }
   };
 
   const getCategoria = async (category) => {
     try {
-      const response = await axios.get(`https://e-commerce-baoo.onrender.com/?category=${category}`);
-      setProductos(response.data);
+      const response = await axios.get(`https://e-commerce-adzq.onrender.com/?category=${category}`);
+      console.log("Productos por categoría:", response.data);
+      setProductos(response.data);  // Asegúrate de no sobrescribir todo el estado si no es necesario
     } catch (error) {
       console.error("Error al obtener productos por categoría:", error);
     }
@@ -53,24 +57,34 @@ const ProductsContext = ({ children }) => {
       });
 
       if (confirmacion.isConfirmed) {
-        await axios.delete(`https://e-commerce-baoo.onrender.com/delete/${id}`);
+        await axios.delete(`https://e-commerce-adzq.onrender.com/delete/${id}`);
         setProductos(productos.filter((producto) => producto._id !== id));
         Swal.fire("¡Eliminado!", "El producto ha sido eliminado correctamente", "success");
       }
     } catch (error) {
-      console.log(error);
+      console.log("Error al eliminar producto:", error);
       Swal.fire("¡Error!", "Ha ocurrido un error al eliminar el producto", "error");
     }
   };
 
   const updateProductos = async (producto) => {
     try {
-      await axios.put(`https://e-commerce-baoo.onrender.com/update/${producto.id}`, producto);
-      await obtenerProductos();
+      await axios.put(`https://e-commerce-adzq.onrender.com/update/${producto._id}`, producto);
+      obtenerProductos();
       Swal.fire("¡Éxito!", "El producto ha sido actualizado correctamente", "success");
     } catch (error) {
-      console.log(error);
+      console.log("Error al actualizar producto:", error);
       Swal.fire("¡Error!", "Ha ocurrido un error al actualizar el producto", "error");
+    }
+  };
+
+  const getProductoById = async (id) => {
+    try {
+      const response = await axios.get(`https://e-commerce-adzq.onrender.com/id/${id}`);
+      return response.data;  // Debería devolver el producto que recibes
+    } catch (error) {
+      console.error("Error al obtener el producto:", error);
+      throw error;  // O manejar el error de otra manera si lo prefieres
     }
   };
 
@@ -79,10 +93,10 @@ const ProductsContext = ({ children }) => {
   }, []);
 
   return (
-    <ProductsProvider.Provider value={{ productos, addProducto, deleteProductos, updateProductos, getCategoria }}>
+    <ProductsContext.Provider value={{ productos, addProducto, deleteProductos, updateProductos, getCategoria, getProductoById, setProductos }}>
       {children}
-    </ProductsProvider.Provider>
+    </ProductsContext.Provider>
   );
 };
 
-export default ProductsContext;
+export default ProductsProvider;

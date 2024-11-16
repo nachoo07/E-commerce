@@ -1,12 +1,13 @@
 import React, { useState, useContext } from 'react';
-import { ProductsProvider } from '../../../context/productos/ProductsContext';
+import { ProductsContext } from '../../../context/productos/ProductsContext';
 import ProductsFormAdmin from '../admin/ProductsFormAdmin';
 import { Table, Button, Modal, Form, Pagination } from 'react-bootstrap';
 import { FaStar, FaRegStar } from 'react-icons/fa'; // Iconos de estrella
 import './ProductsAdmin.css'
 
 const ProductsAdmin = () => {
-  const { productos, addProducto, deleteProductos, updateProductos, getCategoria } = useContext(ProductsProvider);
+  const { productos, addProducto, deleteProductos, updateProductos, getCategoria, setProductos } = useContext(ProductsContext);
+
   const [buscar, setBuscar] = useState("");
   const [categoriaFiltro, setCategoriaFiltro] = useState("");
   const [show, setShow] = useState(false);
@@ -31,9 +32,18 @@ const ProductsAdmin = () => {
 
   const handleClose = () => setShow(false);
 
-  const toggleFeatured = (producto) => {
-    updateProductos({ ...producto, featured: !producto.featured });
+  
+  // Función para alternar el estado de "destacado" en un producto
+  const toggleFeatured = (productoId) => {
+    const updatedProductos = productos.map((producto) =>
+      producto._id === productoId
+        ? { ...producto, featured: !producto.featured }
+        : producto
+    );
+    setProductos(updatedProductos); // Actualizar el estado de los productos
   };
+
+
 
   // Filtrar productos según búsqueda y categoría
   const productosFiltrados = productos.filter((producto) => {
@@ -106,7 +116,7 @@ const ProductsAdmin = () => {
               <td>${producto.price}</td>
               <td>{producto.stock}</td>
               <td>
-                <Button variant="link" onClick={() => toggleFeatured(producto)}>
+              <Button variant="link" onClick={() => toggleFeatured(producto._id)}>
                   {producto.featured ? <FaStar color="gold" /> : <FaRegStar />}
                 </Button>
               </td>

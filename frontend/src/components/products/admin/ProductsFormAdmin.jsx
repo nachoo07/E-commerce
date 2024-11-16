@@ -27,6 +27,7 @@ const ProductsFormAdmin = ({ producto, setProducto, handleClose, onSubmit }) => 
             image3: "",
             image4: ""
         });
+       
     }, [producto]);
 
     const handleChange = (e) => {

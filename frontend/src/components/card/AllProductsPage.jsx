@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react';
-import { ProductsProvider } from '../../context/productos/ProductsContext';
+import { ProductsContext } from '../../context/productos/ProductsContext';
 import { CartContext } from '../../context/carrito/CarritoContext';
 import { Link } from 'react-router-dom';
 import '../card/allProductsPage.css'
+
 const AllProductsPage = () => {
-  const { productos } = useContext(ProductsProvider);
+  const { productos } = useContext(ProductsContext);
   const { addItem } = useContext(CartContext);
 
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
@@ -14,6 +15,7 @@ const AllProductsPage = () => {
     categoriaSeleccionada === "" || producto.category === categoriaSeleccionada
   );
 
+  
   return (
     <div className="all-products-page">
       <aside className="sidebar-filtros">
@@ -29,18 +31,27 @@ const AllProductsPage = () => {
       </aside>
 
       <div className="product-cards-container">
-        {productosFiltrados.map((producto) => (
-          <Link to={`/product/${producto.id}`} key={producto.id} className="card-link">
-            <div className="card">
-              <img src={producto.image} alt={producto.name} className="card-img-top" />
-              <div className="card-body">
-                <h5 className="card-title">{producto.name}</h5>
-                <p className="discounted-price">${producto.price}</p>
-              </div>
-            </div>
-          </Link>
-        ))}
+
+      {productosFiltrados.map((producto, index) => {
+  if (!producto._id) {
+    console.error('Producto sin _id:', producto); // Verificar si algún producto no tiene _id
+    return null; // No renderiza este producto si no tiene _id
+  }
+
+  return (
+    <Link to={`/product/${producto._id}`} key={producto._id || index} className="card-link">
+      <div className="card">
+        <img src={producto.image} alt={producto.name} className="card-img-top" />
+        <div className="card-body">
+          <h5 className="card-title">{producto.name}</h5>
+          <p className="discounted-price">${producto.price}</p>
+        </div>
       </div>
+    </Link>
+  );
+})}
+      </div>
+      
     </div>
   );
 };

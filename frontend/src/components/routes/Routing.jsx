@@ -19,7 +19,6 @@ const Routing = () => {
             <Route path='/faqpage' element={<FaqPage/>}/> 
             <Route path='/product/:id' element={<ProductDetail/>}/> 
             <Route path='/product' element={<AllProducts/>}/> 
-            
             <Route path="/ruta1" element={<ProductsAdmin/>} />
             
             <Route path="/ruta3" element={<ProductsAdmin/>} />

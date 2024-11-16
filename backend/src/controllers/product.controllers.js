@@ -16,6 +16,7 @@ export const getAllProducts = async (req, res) => {
 }
 
 
+
 export const createProduct = async (req, res) => {
     const { name, category, description, stock, price, image, image2, image3} = req.body;
     console.log("Datos recibidos del frontend:", req.body);

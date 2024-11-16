@@ -1,4 +1,4 @@
-import React from 'react'
+import {useContext} from 'react'
 import Carrusel1 from '../../assets/carrusel1.jpg'
 import Carrusel2 from '../../assets/Untitled-Project.jpg'
 import '../main/init.css'
@@ -7,10 +7,13 @@ import CardProducts from '../card/CardProducts';
 import {Button} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import ContactInfo from '../contact/ContactInfo';
+import { ProductsContext } from '../../context/productos/ProductsContext';
 
 const Init = () => {
 
-
+  const { productos } = useContext(ProductsContext);
+  // Filtrar los productos para mostrar solo los destacados
+  const productosDestacados = productos.filter((producto) => producto.featured);
 
   return (
 
@@ -59,7 +62,16 @@ const Init = () => {
       <h1>Te ofrecemos los mejores productos de </h1>
       <h1>iluminación para tus ambientes</h1>
     </div>
-    <CardProducts/>
+
+    <div className="inicio">
+      <h2>Productos Destacados</h2>
+
+      <div className="productos-destacados">
+        {productosDestacados.map((producto) => (
+          <CardProducts key={producto._id} producto={producto} />
+        ))}
+      </div>
+    </div>
     <div className='boton-ver-mas'>
   <Link to="/product">
     <Button variant="primary" className='boton-vermas'>

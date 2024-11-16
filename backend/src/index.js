@@ -7,6 +7,8 @@ import morgan from "morgan"
 import cors from "cors"
 import cookieParser from "cookie-parser";
 import './/db/db_connection.js'
+import authRoutes from './routes/auth.router.js'
+
 const app = express()
 
 // Configuración de middlewares
@@ -20,7 +22,10 @@ app.use(morgan("dev"))
 app.use(cors())
 app.use(ProductRouter)
 app.use(CardRouter)
-app.use("/api", usersRoutes); // Prefijo "/api" para las rutas de usuario
+
+// Rutas
+app.use("/api/auth", authRoutes);
+app.use("/api/users", usersRoutes);
 
 // Iniciar el servidor
 
