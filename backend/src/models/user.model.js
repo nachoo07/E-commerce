@@ -40,8 +40,8 @@ const userSchema = new Schema(
 
 // Middleware para cifrar la contraseña antes de guardar
 userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
-  this.password = await bcrypt.hash(this.password, 12);
+  if (!this.isModified("password")) return next(); // Solo se ejecuta si la contraseña ha cambiado
+  this.password = await bcrypt.hash(this.password, 12); // Cifra la contraseña
   next();
 });
 

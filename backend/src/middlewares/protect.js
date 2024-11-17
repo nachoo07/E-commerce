@@ -6,9 +6,9 @@ export const protect = (req, res, next) => {
   if (!token) {
     return res.status(401).json({ message: "No has iniciado sesión" });
   }
-
+  
   try {
-    const decoded = jwt.verify(token, "SECRET_KEY"); // Asegúrate de usar la misma clave secreta
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Usando la clave secreta del entorno
     req.user = decoded; // Guardas la información del usuario en req.user
     next(); // Continúa con la siguiente función (controlador)
   } catch (error) {

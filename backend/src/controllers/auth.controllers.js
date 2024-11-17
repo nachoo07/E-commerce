@@ -7,7 +7,7 @@ export const RegisterUser = async (req, res) => {
 
   try {
         // Verifica si el usuario ya existe
-        const existingUser = await User.findOne({ email });
+        const existingUser = await UserModel.findOne({ email });
         if (existingUser) {
           return res.status(400).json({ message: "El usuario ya existe" });
         }
@@ -35,38 +35,42 @@ export const RegisterUser = async (req, res) => {
 };
 
 export const LoginUser = async (req, res) => {
-  const { email, password } = req.body;
 
-  try {
+
+    const { email, password } = req.body;
+  
+    // 1. Verificar que el email y la contraseña no estén vacíos
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Por favor ingresa email y contraseña' });
+    }
+  
+    try {
      const user = await UserModel.findOne({ email });
 
-    if (!user) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
+      if (!user) {
+        return res.status(401).json({ message: "Usuario no encontrado" });
+      }
+      
+
+      const isPasswordCorrect = await user.correctPassword(password);
+      if (!isPasswordCorrect) {
+        return res.status(401).json({ message: "Contraseña incorrecta" });
+      }
+  
+      // 4. Si todo es correcto, generar un token JWT
+      const token = jwt.sign(
+        { id: user._id, name: user.name, email: user.email, rol: user.rol },
+        process.env.JWT_SECRET,
+        { expiresIn: "1d" }
+      );
+  
+      // 5. Enviar el token al cliente
+      res.status(200).json({ message: 'Login exitoso', token });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error del servidor' });
     }
-
-    // Comparar la contraseña cifrada con la proporcionada
-    const match = await bcrypt.compare(password, user.password);  // Aquí se compara la contraseña
-
-    if (!match) {
-      return res.status(401).json({ message: "Contraseña incorrecta" });
-    }
-
-    const token = jwt.sign(
-      { id: user._id, rol: user.rol },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" }
-    );
-
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-    });
-
-    res.status(200).json({ message: "Login exitoso" });
-  } catch (error) {
-    res.status(500).json({ message: "Error al iniciar sesión", error });
-  }
-};
+  };
 
 export const LogoutUser = (req, res) => {
     res.cookie("token", "", {

@@ -1,9 +1,9 @@
 import express from "express";
-import { CreateUser, DeleteUser, GetAllUsers, GetUserById, UpdateUser } from "../controllers/user.controller.js";
+import { CreateUser, GetUserById, UpdateUser, GetAllUsers, DeleteUser } from "../controllers/user.controllers.js";
 import { protect } from "../middlewares/protect.js";
 import { restrictTo } from "../middlewares/restrictTo.js";
 import { validate } from "../middlewares/validate.js";
-import { registerSchema, updateSchema } from "../validators/user.validator.js";
+import { registerSchema, updateSchema } from "../validations/validationSchemas.js";
 
 const router = express.Router();
 
