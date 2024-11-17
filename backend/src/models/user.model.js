@@ -1,4 +1,6 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from "mongoose"; 
+
+
 import bcrypt from 'bcryptjs'
 
 const userSchema = new Schema(
@@ -52,3 +54,6 @@ userSchema.methods.correctPassword = async function (candidatePassword, userPass
 
 
 export const UserModel = model('User', userSchema);
+
+
+

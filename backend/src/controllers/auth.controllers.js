@@ -81,3 +81,5 @@ export const LogoutUser = (req, res) => {
   
     res.status(200).json({ message: "Cierre de sesión exitoso" });
   };
+
+  
