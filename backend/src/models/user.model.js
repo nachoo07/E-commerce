@@ -1,7 +1,4 @@
-import { Schema, model } from "mongoose"; 
-
-
-import bcrypt from 'bcryptjs'
+import { Schema, model } from "mongoose";
 
 const userSchema = new Schema(
   {
@@ -40,20 +37,4 @@ const userSchema = new Schema(
   }
 );
 
-// Middleware para cifrar la contraseña antes de guardar
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next(); // Solo se ejecuta si la contraseña ha cambiado
-  this.password = await bcrypt.hash(this.password, 12); // Cifra la contraseña
-  next();
-});
-
-// Método para comparar contraseñas
-userSchema.methods.correctPassword = async function (candidatePassword, userPassword) {
-  return await bcrypt.compare(candidatePassword, userPassword);
-};
-
-
 export const UserModel = model('User', userSchema);
-
-
-

@@ -1,22 +1,17 @@
 import express from "express";
-import { CreateUser, GetUserById, UpdateUser, GetAllUsers, DeleteUser } from "../controllers/user.controllers.js";
-import { protect } from "../middlewares/protect.js";
-import { restrictTo } from "../middlewares/restrictTo.js";
-import { validate } from "../middlewares/validate.js";
-import { registerSchema, updateSchema } from "../validations/validationSchemas.js";
+import { CreateUser, DeleteUser, GetAllUsers, GetUserById, UpdateUser, LoginUser } from "../controllers/user.controllers.js";
+
+
 
 const router = express.Router();
 
-// Rutas protegidas (solo administradores)
-router.post("/users", protect, restrictTo("admin"), validate(registerSchema), CreateUser);
-router.get("/users", protect, restrictTo("admin"), GetAllUsers);
-router.delete("/users/:id", protect, restrictTo("admin"), DeleteUser);
-
-// Rutas protegidas (usuarios autenticados)
-router.get("/users/:id", protect, GetUserById);
-router.put("/users/:id", protect, validate(updateSchema), UpdateUser);
-
-export default router;
+router.get("/",GetAllUsers);
+router.get("/:id",GetUserById);
+router.post("/register", CreateUser);
+router.delete("/delete/:id",DeleteUser);
+router.put("/update/:id",UpdateUser);
+router.post("/login",LoginUser);
 
 
 
+export default router; 

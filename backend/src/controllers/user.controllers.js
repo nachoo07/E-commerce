@@ -1,81 +1,122 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import { UserModel } from "../models/user.model.js";
 
+
 export const GetAllUsers = async (req, res) => {
+
   try {
+
     const users = await UserModel.find();
-    res.status(200).json(users);
-  } catch (error) {
-    res.status(500).json({ message: "Error al obtener los usuarios", error });
+    res.status(200).json({ users, mensaje: "Usuarios Encontrados en la base de datos" });
+  }
+  catch (error) {
+
+    res.status(500).json({ message: "Error en el servidor" });
+
   }
 };
 
-export const GetUserById = async (req, res) => {
+export const LoginUser = async (req, res) => {
+
   try {
-    const user = await UserModel.findById(req.params.id);
-    if (!user) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
+    const { email, password } = req.body;
+    if (!email || !password) {
+
+      return res.status(400).json({ message: "No se aceptan campos vacíos" });
     }
-    res.status(200).json(user);
+
+
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "Usuario o Contraseña no válido." });
+    }
+
+
+    const validPassword = await bcrypt.compare(password, user.password);
+
+    if (!validPassword) {
+      return res.status(400).json({ message: "Usuario o Contraseña no válido." });
+    }
+
+    const token = jwt.sign({
+
+      id: user._id,
+      email: user.email,
+      name: user.name,
+      surname: user.surname,
+      rol: user.rol
+    },
+      process.env.JWT_SECRET, {
+      expiresIn: "1h"
+    });
+
+    res.status(200).json({ token });
   } catch (error) {
-    res.status(500).json({ message: "Error al obtener el usuario", error });
+    return res.status(500).json({ message: "Falla en el servidor." });
   }
-};
+
+}
 
 export const CreateUser = async (req, res) => {
   const { name, surname, email, password, rol } = req.body;
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new UserModel({
+    const existingUser = await UserModel.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "El email ya está registrado" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    const newUser = await UserModel.create({
       name,
       surname,
       email,
       password: hashedPassword,
-      rol: rol || "usuario", // Por defecto "usuario" si no se especifica rol
+      rol
     });
 
-    await newUser.save();
-    res.status(201).json({ message: "Usuario creado exitosamente", newUser });
+    res.status(201).json({ message: "Usuario registrado exitosamente" });
   } catch (error) {
-    res.status(500).json({ message: "Error al crear el usuario", error });
+    return res.status(500).json({ message: error.message });
   }
 };
 
-export const UpdateUser = async (req, res) => {
-  const { name, surname, email, password, rol } = req.body;
-
+export async function GetUserById(req, res) {
   try {
-    const updatedUser = await UserModel.findByIdAndUpdate(
-      req.params.id,
-      {
-        name,
-        surname,
-        email,
-        ...(password && { password: await bcrypt.hash(password, 10) }),
-        rol,
-      },
-      { new: true }
-    );
-
-    if (!updatedUser) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
-    }
-
-    res.status(200).json({ message: "Usuario actualizado", updatedUser });
+    const { id } = req.params;
+    const user = await UserModel.findById(id);
+    return res.status(200).json(user);
   } catch (error) {
-    res.status(500).json({ message: "Error al actualizar el usuario", error });
+    return res.status(500).json({ message: error.message });
   }
-};
+}
 
-export const DeleteUser = async (req, res) => {
+export async function DeleteUser(req, res) {
   try {
-    const user = await UserModel.findByIdAndDelete(req.params.id);
+    const { id } = req.params;
+    const user = await UserModel.findByIdAndDelete(id);
+    return res.status(200).json("Usuario eliminado exitosamente");
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}
+
+export async function UpdateUser(req, res) {
+  try {
+    const { id } = req.params;
+    const { name, email, rol } = req.body;
+    const user = await UserModel.findByIdAndUpdate(id, { name, email, rol });
     if (!user) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
+      return res.status(404).json("Usuario no encontrado");
     }
-    res.status(200).json({ message: "Usuario eliminado correctamente" });
+    return res.status(200).json("Usuario actualizado exitosamente");
   } catch (error) {
-    res.status(500).json({ message: "Error al eliminar el usuario", error });
+    return res.status(500).json({ message: error.message });
   }
+}
+
+export const logoutUser = async (req, res) => {
+  res.status(200).json({ message: "Sesión cerrada exitosamente" });
 };
