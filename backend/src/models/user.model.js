@@ -1,40 +1,19 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
-const userSchema = new Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-      minLength: [3, 'El campo "name" debe tener al menos 3 caracteres'],
-      maxLength: [100, 'El campo "name" debe tener como máximo 100 caracteres'],
+// Esquema de usuario
+const userSchema = new Schema({
+    name: { type: String, required: true },
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true // Elimina espacios en blanco
     },
-    surname: {
-      type: String,
-      required: true,
-      minLength: [3, 'El campo "surname" debe tener al menos 3 caracteres'],
-      maxLength: [100, 'El campo "surname" debe tener como máximo 100 caracteres'],
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
-      minLength: [3, 'El campo "password" debe tener al menos 3 caracteres'],
-      maxLength: [100, 'El campo "password" debe tener como máximo 100 caracteres'],
-    },
-    rol: {
-      type: String,
-      enum: ['admin', 'usuario'],
-      default: 'usuario'
-    },
-  },
-  {
-    timestamps: true,
-    versionKey: false,
-  }
-);
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    role: { type: String, default: 'user' }, // Ejemplo: 'admin' o 'user'
+}, { timestamps: true });
 
-export const UserModel = model('User', userSchema);
+const User = model('Usuario', userSchema);
+
+export default User;
