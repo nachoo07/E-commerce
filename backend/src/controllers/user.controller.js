@@ -2,12 +2,13 @@ import User from '../models/user.model.js';
 
 // Crear usuario
 export const createUser = async (req, res) => {
-
+    console.log('Datos recibidos:', req.body);  // Añade este log
     try {
         const newUser = new User(req.body);
         await newUser.save();
         res.status(201).json(newUser);
     } catch (error) {
+        console.error('Error al crear usuario:', error);  // Añade este log
         res.status(400).json({ error: error.message });
     }
 };

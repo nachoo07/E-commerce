@@ -13,17 +13,18 @@ import './db/db_connection.js'
 
 const app = express()
 
-app.use(cors())
+
 app.use(morgan("dev"))
 
 // Configuración de middlewares
+app.use(cors())
 app.use(express.json());           // Procesa JSON en el cuerpo de las solicitudes
 app.use(cookieParser());           // Procesa las cookies en las solicitudes
 
 // Rutas
-app.use(bodyParser.json());
-app.use(userRoutes); // Registrar las rutas de usuario
-app.use(ProductRouter);  // Rutas de productos
+
+app.use("/api/users",userRoutes); // Registrar las rutas de usuario
+app.use("/api/product",ProductRouter);  // Rutas de productos
 app.use(CardRouter);  // Rutas de carrito
 
 // Iniciar el servidor
