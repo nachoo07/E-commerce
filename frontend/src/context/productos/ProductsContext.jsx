@@ -3,26 +3,23 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 export const ProductsContext = createContext();
-
-console.log("Lista de productos:", ProductsContext);
-
-const ProductsProvider = ({ children }) => {
-
+ const ProductsProvider = ({ children }) => {
   const [productos, setProductos] = useState([]);
 
   const obtenerProductos = async () => {
     try {
-      const response = await axios.get("https://e-commerce-adzq.onrender.com/");
+      const response = await axios.get("https://e-commerce-adzq.onrender.com/api/product/");
       console.log("Response data:", response.data);  // Verifica la respuesta
       setProductos(response.data);
     } catch (error) {
       console.error("Error obteniendo productos:", error);
+      Swal.fire("¡Error!", "No se pudieron obtener los productos. Verifica la URL y el servidor.", "error");
     }
   };
 
   const addProducto = async (producto) => {
     try {
-      const response = await axios.post("https://e-commerce-adzq.onrender.com/create", producto);
+      const response = await axios.post("https://e-commerce-adzq.onrender.com/api/product/create", producto);
       console.log("Response data:", response.data);
       setProductos((prevProductos) => [...prevProductos, response.data]);  // Usamos la actualización basada en el estado anterior
       Swal.fire("¡Éxito!", "El producto ha sido creado correctamente", "success");
@@ -35,7 +32,7 @@ const ProductsProvider = ({ children }) => {
 
   const getCategoria = async (category) => {
     try {
-      const response = await axios.get(`https://e-commerce-adzq.onrender.com/?category=${category}`);
+      const response = await axios.get(`https://e-commerce-adzq.onrender.com/api/product?category=${category}`);
       console.log("Productos por categoría:", response.data);
       setProductos(response.data);  // Asegúrate de no sobrescribir todo el estado si no es necesario
     } catch (error) {
@@ -57,7 +54,7 @@ const ProductsProvider = ({ children }) => {
       });
 
       if (confirmacion.isConfirmed) {
-        await axios.delete(`https://e-commerce-adzq.onrender.com/delete/${id}`);
+        await axios.delete(`https://e-commerce-adzq.onrender.com/api/product/delete/${id}`);
         setProductos(productos.filter((producto) => producto._id !== id));
         Swal.fire("¡Eliminado!", "El producto ha sido eliminado correctamente", "success");
       }
@@ -69,7 +66,7 @@ const ProductsProvider = ({ children }) => {
 
   const updateProductos = async (producto) => {
     try {
-      await axios.put(`https://e-commerce-adzq.onrender.com/update/${producto._id}`, producto);
+      await axios.put(`https://e-commerce-adzq.onrender.com/api/product/update/${producto._id}`, producto);
       obtenerProductos();
       Swal.fire("¡Éxito!", "El producto ha sido actualizado correctamente", "success");
     } catch (error) {
@@ -80,7 +77,7 @@ const ProductsProvider = ({ children }) => {
 
   const getProductoById = async (id) => {
     try {
-      const response = await axios.get(`https://e-commerce-adzq.onrender.com/id/${id}`);
+      const response = await axios.get(`https://e-commerce-adzq.onrender.com/api/product/id/${id}`);
       return response.data;  // Debería devolver el producto que recibes
     } catch (error) {
       console.error("Error al obtener el producto:", error);

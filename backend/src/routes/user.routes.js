@@ -1,19 +1,21 @@
-import express from 'express';
-import {
-    createUser,
-    getAllUsers,
-    getUserById,
-    updateUser,
-    deleteUser,
-} from '../controllers/user.controller.js';
-
+const express = require('express');
 const router = express.Router();
+const userController = require('../controllers/user.controller');
 
-// Rutas CRUD
-router.post('/register', createUser); // Crear usuario
-router.get('/user', getAllUsers); // Obtener todos los usuarios
-router.get('/:id', getUserById); // Obtener usuario por ID
-router.put('/:id', updateUser); // Actualizar usuario
-router.delete('/:id', deleteUser); // Eliminar usuario
+// Ruta para obtener todos los usuarios
+router.get('/', userController.getAllUsers);
 
-export default router;
+// Ruta para obtener un usuario por ID
+router.get('/:id', userController.getUserById);
+
+// Ruta para crear un nuevo usuario
+router.post('/', userController.createUser);
+
+// Ruta para actualizar un usuario existente
+router.put('/:id', userController.updateUser);
+
+// Ruta para eliminar un usuario
+router.delete('/:id', userController.deleteUser);
+
+module.exports = router;
+
