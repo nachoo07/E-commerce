@@ -2,7 +2,7 @@ import express from "express"
 import { PORT } from "../src/config/config.js"
 import ProductRouter from "./routes/product.router.js"
 import CardRouter from "./routes/card.router.js"
-import userRoutes from './routes/user.routes.js'
+import userRoutes from './routes/user.routes.js';
 import authRoutes from './routes/auth.routes.js'
 import morgan from "morgan"
 import cors from "cors"

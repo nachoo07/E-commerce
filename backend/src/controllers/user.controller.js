@@ -1,7 +1,7 @@
-const User = require('../models/user.model');
+import User from '../models/user.model.js';
 
 // Obtener todos los usuarios
-exports.getAllUsers = async (req, res) => {
+const getAllUsers = async (req, res) => {
     try {
         const users = await User.find();
         res.status(200).json(users);
@@ -11,7 +11,7 @@ exports.getAllUsers = async (req, res) => {
 };
 
 // Obtener un usuario por ID
-exports.getUserById = async (req, res) => {
+const getUserById = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
@@ -22,7 +22,7 @@ exports.getUserById = async (req, res) => {
 };
 
 // Crear un nuevo usuario con rol de administrador por defecto
-exports.createUser = async (req, res) => {
+const createUser = async (req, res) => {
     const user = new User({
         ...req.body,
         role: 'admin' // Asignar rol de administrador por defecto
@@ -36,7 +36,7 @@ exports.createUser = async (req, res) => {
 };
 
 // Actualizar un usuario existente
-exports.updateUser = async (req, res) => {
+const updateUser = async (req, res) => {
     try {
         const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!updatedUser) return res.status(404).json({ message: 'Usuario no encontrado' });
@@ -47,7 +47,7 @@ exports.updateUser = async (req, res) => {
 };
 
 // Eliminar un usuario
-exports.deleteUser = async (req, res) => {
+const deleteUser = async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.params.id);
         if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
@@ -55,4 +55,12 @@ exports.deleteUser = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
+};
+
+export default {
+    getAllUsers,
+    getUserById,
+    createUser,
+    updateUser,
+    deleteUser
 };
