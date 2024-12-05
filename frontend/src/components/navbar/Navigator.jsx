@@ -7,7 +7,7 @@ import logo from '../../assets/logo.png';
 import { useState, useEffect, useContext } from 'react';
 import CardIcon from '../carrito/CardIcon/CardIcon';
 import { BsFillPersonFill } from "react-icons/bs";
-//import LoginDrawer from '../login/Login';
+import Logout from '../login/Logout';
 
 
 const Navigator = () => {
@@ -78,7 +78,8 @@ const Navigator = () => {
               <i className="fas fa-search search-icon"></i>
             </div>
             <CardIcon />
-            <BsFillPersonFill size={24} />
+            <BsFillPersonFill size={34} onClick={() => navigate("/login")} style={{ cursor: 'pointer' }}/>
+            <Logout />
           </div>
         </Navbar.Collapse>
       </Navbar>

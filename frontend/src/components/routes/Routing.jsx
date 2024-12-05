@@ -5,12 +5,10 @@ import ProductDetail from '../productDetail/ProductDetail';
 import AllProducts from '../../pages/products/AllProducts';
 import FaqPage from '../../pages/FaqPage/FaqPage';
 import PageInit from '../../pages/main/PageInit';
-//import Login from '../login/Login';
 import ProductsAdmin from '../products/admin/ProductsAdmin';
 import UsersAdmin from '../usuariosAdmin/UsersAdmin';
-//import UsersAdmin from '../usuariosAdmin/UsersAdmin';
-
-
+import Login from '../login/Login';
+import Register from '../login/Register';
 const Routing = () => {
   return (
     <>
@@ -25,6 +23,8 @@ const Routing = () => {
             <Route path="/ruta4" element={<ProductsAdmin/>} />
             <Route path="/ruta5" element={<ProductsAdmin/>} />
             <Route path="/ruta6" element={<ProductsAdmin/>} />
+            <Route path="/login" element={<Login/>} />
+            <Route path="/register" element={<Register />} />
         </Routes>
     </>
   )

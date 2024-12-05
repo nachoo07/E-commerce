@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import '../usuariosAdmin/UsersAdmin.css'
+
 const UserFormAdmin = ({ usuario, handleClose, onSubmit }) => {
     const [formData, setFormData] = useState({
-        correo: "",
+        email: "",
         password: "",
         role: "Cliente", // Valor por defecto, puede cambiarse si se requiere
     });
@@ -13,7 +14,7 @@ const UserFormAdmin = ({ usuario, handleClose, onSubmit }) => {
             setFormData(usuario); // Carga datos del usuario si se está editando
         } else {
             setFormData({
-                correo: "",
+                email: "",
                 password: "",
                 role: "Cliente",
             });
@@ -37,8 +38,8 @@ const UserFormAdmin = ({ usuario, handleClose, onSubmit }) => {
                 <Form.Label>Correo</Form.Label>
                 <Form.Control
                     type="email"
-                    name="correo"
-                    value={formData.correo}
+                    name="email"
+                    value={formData.email}
                     onChange={handleChange}
                     placeholder="Correo electrónico"
                     required

@@ -6,7 +6,7 @@ const userSchema = new Schema({
     username: { type: String, required: true, unique: true, trim: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    role: { type: String, enum: ['admin', 'user'], default: 'admin' }, // Rol por defecto 'admin'
+    role: { type: String, enum: ['admin', 'user'], default: 'user' }, // Rol por defecto 'admin'
 }, { timestamps: true });
 
 const User = model('User', userSchema);

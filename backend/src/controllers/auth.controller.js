@@ -1,9 +1,15 @@
+import { validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import User from '../models/user.model.js';
 
 // Registro
 export const register = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     try {
         const { name, username, email, password } = req.body;
 
@@ -14,8 +20,8 @@ export const register = async (req, res) => {
         // Encriptar contraseña
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Crear usuario con rol "user" por defecto
-        const newUser = new User({ name, username, email, password: hashedPassword });
+        // Crear usuario con rol "cliente" por defecto
+        const newUser = new User({ name, username, email, password: hashedPassword, role: 'user' });
         await newUser.save();
 
         res.status(201).json({ message: 'Usuario registrado correctamente' });
@@ -26,6 +32,11 @@ export const register = async (req, res) => {
 
 // Login
 export const login = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     try {
         const { email, password } = req.body;
 

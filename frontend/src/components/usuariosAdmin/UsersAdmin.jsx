@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { UsersContext } from '../../context/users/UsersContext'; // Asegúrate de importar tu contexto de usuarios
 import UsersFormAdmin from '../usuariosAdmin/UsersFormAdmin'; // Componente para el formulario
-import { Table, Button, Modal, Form, Pagination } from 'react-bootstrap';
+import { Table, Button, Modal, Pagination } from 'react-bootstrap';
 import '../usuariosAdmin/UsersAdmin.css'
 
 const UsersAdmin = () => {
@@ -31,7 +31,7 @@ const UsersAdmin = () => {
 
   // Filtrar usuarios según búsqueda
   const usuariosFiltrados = usuarios.filter((usuario) =>
-    usuario.correo?.toLowerCase().includes(buscar.toLowerCase())
+    usuario.email?.toLowerCase().includes(buscar.toLowerCase())
   );
 
   // Obtener usuarios para la página actual
@@ -75,7 +75,7 @@ const UsersAdmin = () => {
         <tbody>
           {currentItems.map((usuario) => (
             <tr key={usuario._id}>
-              <td>{usuario.correo}</td>
+              <td>{usuario.email}</td>
               <td>{usuario.role}</td>
               <td className='botones-acciones'>
                 <Button variant="info" className='boton-editar' onClick={() => handleEdit(usuario)}>Editar</Button>
