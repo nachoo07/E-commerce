@@ -15,7 +15,6 @@ const getAllUsers = async (req, res) => {
 // Obtener un usuario por ID
 const getUserById = async (req, res) => {
     const { id } = req.params;
-    console.log("ID recibido:", id); // Esto muestra el valor que llega
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).json({ message: 'ID inválido' });
     }
@@ -24,7 +23,6 @@ const getUserById = async (req, res) => {
         if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
         res.status(200).json(user);
     } catch (error) {
-        console.error("Error al obtener usuario:", error); // Esto muestra cualquier error
         res.status(500).json({ message: error.message });
     }
 };

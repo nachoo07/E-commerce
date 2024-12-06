@@ -1,23 +1,20 @@
 import express from 'express';
 import userController from '../controllers/user.controller.js';
-import { authenticate, authorizeAdmin } from '../middlewares/auth.middleware.js';
+import { authenticate } from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
-// Ruta para crear un nuevo usuario administrador
-router.post('/create', authenticate, authorizeAdmin, userController.createAdminUser);
+// Ruta para obtener todos los usuarios
+router.get('/', authenticate, userController.getAllUsers);
 
-// Ruta para obtener todos los usuarios administradores
-router.get('/', authenticate, authorizeAdmin, userController.getAllAdminUsers);
+// Ruta para obtener un usuario por ID
+router.get('/:id', authenticate, userController.getUserById);
 
-// Ruta para obtener un usuario administrador por ID
-router.get('/:id', authenticate, authorizeAdmin, userController.getAdminUserById);
+// Ruta para actualizar un usuario existente
+router.put('/:id', authenticate, userController.updateUser);
 
-// Ruta para actualizar un usuario administrador existente
-router.put('/:id', authenticate, authorizeAdmin, userController.updateAdminUser);
-
-// Ruta para eliminar un usuario administrador
-router.delete('/:id', authenticate, authorizeAdmin, userController.deleteAdminUser);
+// Ruta para eliminar un usuario
+router.delete('/:id', authenticate, userController.deleteUser);
 
 export default router;
 

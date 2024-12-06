@@ -3,6 +3,7 @@ import { PORT } from "../src/config/config.js"
 import ProductRouter from "./routes/product.router.js"
 import CardRouter from "./routes/card.router.js"
 import userRoutes from './routes/user.routes.js';
+import adminRoutes from './routes/admin.routes.js';
 import authRoutes from './routes/auth.routes.js'
 import morgan from "morgan"
 import cors from "cors"
@@ -22,6 +23,7 @@ app.use('/api/auth', authRoutes);
 app.use("/api/product",ProductRouter);  // Rutas de productos
 app.use('/api/cards', CardRouter);  // Rutas de carrito
 app.use('/api/users', userRoutes);  // Rutas de usuarios
+app.use('/api/admin', adminRoutes);  // Rutas de administradores
 
 // Iniciar el servidor
 app.listen(PORT, "0.0.0.0", () => {
