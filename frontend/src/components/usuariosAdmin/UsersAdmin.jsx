@@ -1,19 +1,18 @@
 import React, { useState, useContext } from 'react';
-import { UsersContext } from '../../context/users/UsersContext'; // Asegúrate de importar tu contexto de usuarios
-import UsersFormAdmin from '../usuariosAdmin/UsersFormAdmin'; // Componente para el formulario
+import { UsersContext } from '../../context/users/UsersContext';
+import UsersFormAdmin from '../usuariosAdmin/UsersFormAdmin';
 import { Table, Button, Modal, Pagination } from 'react-bootstrap';
 import '../usuariosAdmin/UsersAdmin.css'
 
 const UsersAdmin = () => {
-  const { usuarios, addUsuario, deleteUsuario, updateUsuario } = useContext(UsersContext);
+  const { usuarios, addUsuarioAdmin, deleteUsuarioAdmin, updateUsuarioAdmin } = useContext(UsersContext);
 
   const [buscar, setBuscar] = useState("");
   const [show, setShow] = useState(false);
   const [editarUsuario, setEditarUsuario] = useState(null);
 
-  // Estado para la paginación
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // Número de usuarios por página
+  const itemsPerPage = 5;
 
   const handleBuscarChange = (e) => setBuscar(e.target.value);
 
@@ -29,20 +28,16 @@ const UsersAdmin = () => {
 
   const handleClose = () => setShow(false);
 
-  // Filtrar usuarios según búsqueda
   const usuariosFiltrados = usuarios.filter((usuario) =>
     usuario.email?.toLowerCase().includes(buscar.toLowerCase())
   );
 
-  // Obtener usuarios para la página actual
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = usuariosFiltrados.slice(indexOfFirstItem, indexOfLastItem);
 
-  // Calcular el número total de páginas
   const totalPages = Math.ceil(usuariosFiltrados.length / itemsPerPage);
 
-  // Cambiar de página
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
@@ -79,14 +74,13 @@ const UsersAdmin = () => {
               <td>{usuario.role}</td>
               <td className='botones-acciones'>
                 <Button variant="info" className='boton-editar' onClick={() => handleEdit(usuario)}>Editar</Button>
-                <Button variant="danger" className='boton-editar' onClick={() => deleteUsuario(usuario._id)}>Eliminar</Button>
+                <Button variant="danger" className='boton-editar' onClick={() => deleteUsuarioAdmin(usuario._id)}>Eliminar</Button>
               </td>
             </tr>
           ))}
         </tbody>
       </Table>
 
-      {/* Controles de Paginación */}
       <Pagination className="justify-content-center">
         <Pagination.Prev
           onClick={() => paginate(currentPage - 1)}
@@ -107,7 +101,6 @@ const UsersAdmin = () => {
         />
       </Pagination>
 
-      {/* Modal para agregar y editar */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>{editarUsuario ? "Editar Usuario" : "Agregar Usuario"}</Modal.Title>
@@ -117,7 +110,10 @@ const UsersAdmin = () => {
             usuario={editarUsuario}
             setUsuario={setEditarUsuario}
             handleClose={handleClose}
-            onSubmit={editarUsuario ? updateUsuario : addUsuario}
+            onSubmit={(usuario) => {
+              usuario.role = 'admin'; // Asignar rol de "admin" por defecto
+              editarUsuario ? updateUsuarioAdmin(usuario._id, usuario) : addUsuarioAdmin(usuario);
+            }}
           />
         </Modal.Body>
       </Modal>

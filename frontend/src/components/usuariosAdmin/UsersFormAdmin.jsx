@@ -6,17 +6,20 @@ const UserFormAdmin = ({ usuario, handleClose, onSubmit }) => {
     const [formData, setFormData] = useState({
         email: "",
         password: "",
-        role: "Cliente", // Valor por defecto, puede cambiarse si se requiere
+        role: "admin", // Asignar rol de "admin" por defecto
     });
 
     useEffect(() => {
         if (usuario) {
-            setFormData(usuario); // Carga datos del usuario si se está editando
+            setFormData({
+                ...usuario,
+                password: '' // No mostrar la contraseña existente
+            });
         } else {
             setFormData({
                 email: "",
                 password: "",
-                role: "Cliente",
+                role: "admin",
             });
         }
     }, [usuario]);
@@ -55,7 +58,7 @@ const UserFormAdmin = ({ usuario, handleClose, onSubmit }) => {
                     onChange={handleChange}
                     placeholder="Contraseña"
                     minLength={6}
-                    required
+                    required={!usuario} // Requerido solo si es un nuevo usuario
                 />
                 <Form.Text>Debe tener al menos 6 caracteres.</Form.Text>
             </Form.Group>

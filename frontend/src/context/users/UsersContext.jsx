@@ -7,11 +7,9 @@ export const UsersContext = createContext();
 const UsersProvider = ({children}) => {
     const [usuarios, setUsuarios] = useState([]);
 
-    // Obtener todos los usuarios
     const obtenerUsuarios = async () => {
         try {
             const response = await axios.get("https://e-commerce-adzq.onrender.com/api/users/");
-            console.log("Response data:", response.data);  // Verifica la respuesta
             setUsuarios(response.data);
         } catch (error) {
             console.error("Error al obtener usuarios:", error);
@@ -19,31 +17,19 @@ const UsersProvider = ({children}) => {
         }
     };
 
-    // Crear usuario
-    const addUsuario = async (usuario) => {
+    const addUsuarioAdmin = async (usuario) => {
         try {
-            const response = await axios.post("https://e-commerce-adzq.onrender.com/api/users/", usuario);
+            usuario.role = 'admin'; // Asignar rol de "admin" por defecto
+            const response = await axios.post("https://e-commerce-adzq.onrender.com/api/users/create", usuario);
             setUsuarios((prevUsuarios) => [...prevUsuarios, response.data]);
-            Swal.fire("¡Éxito!", "Usuario creado correctamente", "success");
+            Swal.fire("¡Éxito!", "Usuario admin creado correctamente", "success");
         } catch (error) {
-            console.error("Error al crear usuario:", error);
-            Swal.fire("¡Error!", "No se pudo crear el usuario", "error");
+            console.error("Error al crear usuario admin:", error);
+            Swal.fire("¡Error!", "No se pudo crear el usuario admin", "error");
         }
     };
 
-    // Obtener usuario por ID
-    const getUsuarioById = async (id) => {
-        try {
-            const response = await axios.get(`https://e-commerce-adzq.onrender.com/api/users/${id}`);
-            return response.data;
-        } catch (error) {
-            console.error("Error al obtener usuario por ID:", error);
-            throw error;
-        }
-    };
-
-    // Actualizar usuario
-    const updateUsuario = async (id, usuarioActualizado) => {
+    const updateUsuarioAdmin = async (id, usuarioActualizado) => {
         try {
             const response = await axios.put(`https://e-commerce-adzq.onrender.com/api/users/${id}`, usuarioActualizado);
             setUsuarios((prevUsuarios) =>
@@ -58,8 +44,7 @@ const UsersProvider = ({children}) => {
         }
     };
 
-    // Eliminar usuario
-    const deleteUsuario = async (id) => {
+    const deleteUsuarioAdmin = async (id) => {
         try {
             const confirmacion = await Swal.fire({
                 title: "¿Estás seguro?",
@@ -83,7 +68,6 @@ const UsersProvider = ({children}) => {
         }
     };
 
-    // Ejecutar al cargar el componente
     useEffect(() => {
         obtenerUsuarios();
     }, []);
@@ -91,10 +75,9 @@ const UsersProvider = ({children}) => {
     return (
         <UsersContext.Provider value={{
             usuarios,
-            addUsuario,
-            getUsuarioById,
-            updateUsuario,
-            deleteUsuario,
+            addUsuarioAdmin,
+            updateUsuarioAdmin,
+            deleteUsuarioAdmin,
         }}>
             {children}
         </UsersContext.Provider>

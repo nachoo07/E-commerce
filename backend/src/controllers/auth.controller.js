@@ -20,7 +20,7 @@ export const register = async (req, res) => {
         // Encriptar contraseña
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Crear usuario con rol "cliente" por defecto
+        // Crear usuario con rol "user" por defecto
         const newUser = new User({ name, username, email, password: hashedPassword, role: 'user' });
         await newUser.save();
 
