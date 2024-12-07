@@ -9,7 +9,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
-    const  login  = useContext(AuthContext);
+    const  {login}  = useContext(AuthContext);
 
     const validate = () => {
         const errors = {};
@@ -28,7 +28,9 @@ const Login = () => {
 
         try {
             const response = await axios.post('https://e-commerce-adzq.onrender.com/api/auth/login', { email, password }, { withCredentials: true });
-            if (response.data && response.data.message === 'Login exitoso') {
+            console.log('Response:', response);  // Verifica la respuesta completa del servidor
+        
+            if (response.data && response.data.message === 'Login successful') {
                 login(response.data.role); // Guarda el rol en el contexto
                 alert('Login exitoso');
                 navigate('/'); // Redirigir a la página principal
@@ -39,6 +41,7 @@ const Login = () => {
             if (error.response && error.response.data && error.response.data.message) {
                 alert(error.response.data.message);
             } else {
+                console.error(error);  // Mostrar el error completo en la consola
                 alert('Error al iniciar sesión');
             }
         }

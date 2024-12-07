@@ -52,9 +52,10 @@ export const login = async (req, res) => {
         // Configurar cookie
         res.cookie('token', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production', // Configuración para producción/desarrollo
-            sameSite: 'strict',
-            maxAge: 24 * 60 * 60 * 1000, // 1 día
+            secure: process.env.NODE_ENV === 'production',  // Solo en HTTPS
+            sameSite: 'Lax', // Cambiado a 'Lax' para mayor compatibilidad
+            maxAge: 24 * 60 * 60 * 1000 , // 1 día en milisegundos
+            domain: process.env.NODE_ENV === 'production' ? 'e-commerce-adzq.onrender.com' : 'localhost',
         });
 
         res.status(200).json({ message: 'Login successful', role: user.role });
@@ -63,9 +64,20 @@ export const login = async (req, res) => {
     }
 };
 
-export const logout = (req, res) => {
+/*export const logout = (req, res) => {
     res.clearCookie('token');
     res.status(200).send({ message: 'User logged out successfully!' });
+};*/
+export const logout = (req, res) => {
+    console.log('Cookies recibidas en el servidor:', req.cookies); // Verifica si llega la cookie 'token'
+    
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'Lax',
+    });
+
+    res.status(200).json({ message: 'User logged out successfully!' });
 };
 
 export const updateProfile = async (req, res) => {

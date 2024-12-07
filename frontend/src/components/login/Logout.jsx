@@ -5,16 +5,18 @@ import { AuthContext } from '../../context/login/LoginContext';
 
 const Logout = () => {
     const navigate = useNavigate();
-    const  logout = useContext(AuthContext);
+    const logout = useContext(AuthContext);
 
     const handleLogout = async () => {
         try {
-            await axios.post('https://e-commerce-adzq.onrender.com/api/auth/logout', {}, { withCredentials: true });
+            await axios.post('https://e-commerce-adzq.onrender.com/api/auth/logout', {}, {
+                withCredentials: true,  // Asegúrate de que las cookies se envíen
+            });
             logout();
             alert('Logout exitoso');
             navigate('/login'); // Redirigir a la página de login después del logout
         } catch (error) {
-            alert('Error al cerrar sesión');
+            alert(`Error al cerrar sesión: ${error.message}`);
         }
     };
 

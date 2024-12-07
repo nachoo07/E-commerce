@@ -2,11 +2,18 @@ import jwt from 'jsonwebtoken';
 import { SECRET_KEY } from '../config/config.js';
 
 export const verifyToken = (req, res, next) => {
-    const token = req.headers['authorization'];
-    if (!token) return res.status(403).send({ message: 'No token provided.' });
+    // Cambié la forma en que obtenemos el token
+    const token = req.cookies.token;  // Leer desde las cookies
+    console.log('Token recibido:', token); 
+    if (!token) {
+        return res.status(403).send({ message: 'No token provided.' });
+    }
 
     jwt.verify(token, SECRET_KEY, (err, decoded) => {
-        if (err) return res.status(500).send({ message: 'Failed to authenticate token.' });
+        if (err) {
+            return res.status(500).send({ message: 'Failed to authenticate token.' });
+        }
+
         req.userId = decoded.id;
         req.userRole = decoded.role;
         next();
