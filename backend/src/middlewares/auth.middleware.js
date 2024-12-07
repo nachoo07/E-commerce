@@ -1,28 +1,21 @@
 import jwt from 'jsonwebtoken';
-import rateLimit from 'express-rate-limit';
+import { SECRET_KEY } from '../config/config.js';
 
-export const authenticate = (req, res, next) => {
-    const token = req.cookies.token;
-    if (!token) return res.status(401).json({ message: 'Acceso no autorizado' });
+export const verifyToken = (req, res, next) => {
+    const token = req.headers['authorization'];
+    if (!token) return res.status(403).send({ message: 'No token provided.' });
 
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded;
+    jwt.verify(token, SECRET_KEY, (err, decoded) => {
+        if (err) return res.status(500).send({ message: 'Failed to authenticate token.' });
+        req.userId = decoded.id;
+        req.userRole = decoded.role;
         next();
-    } catch (error) {
-        res.status(401).json({ message: 'Token inválido o expirado' });
-    }
+    });
 };
 
-export const authorizeAdmin = (req, res, next) => {
-    if (req.user.role !== 'admin') {
-        return res.status(403).json({ message: 'Acceso denegado: Solo para administradores' });
+export const isAdmin = (req, res, next) => {
+    if (req.userRole !== 'admin') {
+        return res.status(403).send({ message: 'Require Admin Role!' });
     }
     next();
 };
-
-export const rateLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutos
-    max: 100, // Limite de 100 solicitudes por IP
-    message: 'Demasiadas solicitudes, por favor intente de nuevo más tarde.'
-});

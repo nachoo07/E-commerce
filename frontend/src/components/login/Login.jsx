@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import  {useNavigate}  from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/login/LoginContext';
 import '../login/login.css';
 
 const Login = () => {
@@ -8,6 +9,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
+    const  login  = useContext(AuthContext);
 
     const validate = () => {
         const errors = {};
@@ -25,11 +27,20 @@ const Login = () => {
         }
 
         try {
-            const response = await axios.post('https://e-commerce-adzq.onrender.com/api/auth/login', { email, password });
-            alert(response.data.message);
-            navigate('/'); // Redirigir a la página principal después del login
+            const response = await axios.post('https://e-commerce-adzq.onrender.com/api/auth/login', { email, password }, { withCredentials: true });
+            if (response.data && response.data.message === 'Login exitoso') {
+                login(response.data.role); // Guarda el rol en el contexto
+                alert('Login exitoso');
+                navigate('/'); // Redirigir a la página principal
+            } else {
+                alert('Error en la respuesta del servidor');
+            }
         } catch (error) {
-            alert(error.response.data.message);
+            if (error.response && error.response.data && error.response.data.message) {
+                alert(error.response.data.message);
+            } else {
+                alert('Error al iniciar sesión');
+            }
         }
     };
 

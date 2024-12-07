@@ -1,14 +1,34 @@
-import { Schema, model } from 'mongoose';
+import mongoose from 'mongoose';
 
-// Esquema de usuario
-const userSchema = new Schema({
-    name: { type: String, required: true },
-    username: { type: String, required: true, unique: true, trim: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    role: { type: String, enum: ['admin', 'user'], default: 'user' }, // Rol por defecto 'admin'
-}, { timestamps: true });
+const userSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        trim: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    role: {
+        type: String,
+        required: true,
+        default: 'user'
+    }
+});
 
-const User = model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
 export default User;

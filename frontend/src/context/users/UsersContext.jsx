@@ -9,7 +9,7 @@ const UsersProvider = ({children}) => {
 
     const obtenerUsuarios = async () => {
         try {
-            const response = await axios.get("https://e-commerce-adzq.onrender.com/api/users/");
+            const response = await axios.get("https://e-commerce-adzq.onrender.com/api/admin/");
             setUsuarios(response.data);
         } catch (error) {
             console.error("Error al obtener usuarios:", error);
@@ -20,7 +20,7 @@ const UsersProvider = ({children}) => {
     const addUsuarioAdmin = async (usuario) => {
         try {
             usuario.role = 'admin'; // Asignar rol de "admin" por defecto
-            const response = await axios.post("https://e-commerce-adzq.onrender.com/api/users/create", usuario);
+            const response = await axios.post("https://e-commerce-adzq.onrender.com/admin/users", usuario);
             setUsuarios((prevUsuarios) => [...prevUsuarios, response.data]);
             Swal.fire("¡Éxito!", "Usuario admin creado correctamente", "success");
         } catch (error) {
@@ -31,7 +31,7 @@ const UsersProvider = ({children}) => {
 
     const updateUsuarioAdmin = async (id, usuarioActualizado) => {
         try {
-            const response = await axios.put(`https://e-commerce-adzq.onrender.com/api/users/${id}`, usuarioActualizado);
+            const response = await axios.put(`https://e-commerce-adzq.onrender.com/admin/users/${id}`, usuarioActualizado);
             setUsuarios((prevUsuarios) =>
                 prevUsuarios.map((usuario) =>
                     usuario._id === id ? response.data : usuario
@@ -58,7 +58,7 @@ const UsersProvider = ({children}) => {
             });
 
             if (confirmacion.isConfirmed) {
-                await axios.delete(`https://e-commerce-adzq.onrender.com/api/users/${id}`);
+                await axios.delete(`https://e-commerce-adzq.onrender.com/admin/users/${id}`);
                 setUsuarios((prevUsuarios) => prevUsuarios.filter((usuario) => usuario._id !== id));
                 Swal.fire("¡Eliminado!", "Usuario eliminado correctamente", "success");
             }

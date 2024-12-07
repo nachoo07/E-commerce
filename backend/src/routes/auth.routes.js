@@ -1,22 +1,28 @@
 import { Router } from 'express';
+import { register, login, logout, updateProfile } from '../controllers/auth.controller.js';
+import { verifyToken } from '../middlewares/auth.middleware.js';
 import { check } from 'express-validator';
-import { register, login, logout } from '../controllers/auth.controller.js';
-import { rateLimiter } from '../middlewares/auth.middleware.js';
 
 const router = Router();
 
-router.post('/register', rateLimiter, [
-    check('name').notEmpty().withMessage('El nombre es obligatorio'),
-    check('username').notEmpty().withMessage('El nombre de usuario es obligatorio'),
-    check('email').isEmail().withMessage('Debe ser un email válido'),
-    check('password').isLength({ min: 6 }).withMessage('La contraseña debe tener al menos 6 caracteres')
+router.post('/register', [
+    check('name').notEmpty().withMessage('Name is required'),
+    check('username').notEmpty().withMessage('Username is required'),
+    check('email').isEmail().withMessage('Valid email is required'),
+    check('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long')
 ], register);
 
-router.post('/login', rateLimiter, [
-    check('email').isEmail().withMessage('Debe ser un email válido'),
-    check('password').notEmpty().withMessage('La contraseña es obligatoria')
+router.post('/login', [
+    check('email').isEmail().withMessage('Valid email is required'),
+    check('password').notEmpty().withMessage('Password is required')
 ], login);
 
-router.post('/logout', logout);
+router.post('/logout', verifyToken, logout);
+
+router.put('/profile', verifyToken, [
+    check('name').optional().notEmpty().withMessage('Name is required'),
+    check('username').optional().notEmpty().withMessage('Username is required'),
+    check('email').optional().isEmail().withMessage('Valid email is required')
+], updateProfile);
 
 export default router;
