@@ -23,22 +23,29 @@ app.use(limiter);
 // Configuración de middlewares
 app.use(express.json());           // Procesa JSON en el cuerpo de las solicitudes
 app.use(morgan("dev"));
-app.use(cookieParser());         // Procesa las cookies en las solicitudes
+app.use(cookieParser());           // Procesa las cookies en las solicitudes
+
+// Configura las opciones de CORS para permitir ambos orígenes
 // Configura las opciones de CORS para permitir ambos orígenes
 const corsOptions = {
     origin: (origin, callback) => {
-      if (origin === 'http://localhost:5173' || origin === 'https://e-commerce-adzq.onrender.com') {
+      const allowedOrigins = ['http://localhost:5173', 'https://e-commerce-adzq.onrender.com'];
+      if (allowedOrigins.includes(origin) || !origin) {
         callback(null, true); // Permitir el origen
       } else {
         callback(new Error('CORS not allowed'), false); // Rechazar otros orígenes
       }
     },
     credentials: true, // Permitir el envío de cookies
-  };
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Métodos permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'], // Encabezados permitidos
+};
 
 app.use(cors(corsOptions));
+// Maneja las solicitudes OPTIONS
+app.options('*', cors(corsOptions));
 // Rutas
-app.use('/api/product', cors(corsOptions), ProductRouter);  // Rutas específicas
+app.use('/api/product', ProductRouter);  // Rutas específicas
 app.use('/api/cards', CardRouter);       // Rutas de carrito
 app.use('/api/auth', AuthRouter);        // Rutas de autenticación
 
