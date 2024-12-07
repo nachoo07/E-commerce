@@ -23,14 +23,14 @@ app.use(limiter);
 // Configuración de middlewares
 app.use(express.json());           // Procesa JSON en el cuerpo de las solicitudes
 app.use(morgan("dev"));
-app.use(cors({
-    origin: 'https://e-commerce-adzq.onrender.com', // Permitir solicitudes desde este origen
-    credentials: true                // Permitir el envío de cookies
-}));
+const corsOptions = {
+    origin: ['http://localhost:5173', 'https://e-commerce-adzq.onrender.com'], // Permite localhost y el dominio de producción
+    credentials: true, // Permite enviar cookies con la solicitud
+  }; // Configuración de CORS
 
 app.use(cookieParser());           // Procesa las cookies en las solicitudes
 
-
+app.use(cors(corsOptions));
 
 // Rutas
 app.use("/api/product", ProductRouter);  // Rutas de productos
