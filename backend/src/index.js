@@ -3,6 +3,7 @@ import { PORT } from "../src/config/config.js";
 import ProductRouter from "./routes/product.router.js";
 import CardRouter from "./routes/card.router.js";
 import AuthRouter from "./routes/auth.routes.js"; // Importar la ruta de autenticación
+import UserRouter from "./routes/user.routes.js"; // Importar la ruta de usuarios
 import morgan from "morgan";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -47,6 +48,7 @@ app.options('*', cors(corsOptions));
 // Rutas
 app.use('/api/product', ProductRouter);  // Rutas específicas
 app.use('/api/cards', CardRouter);       // Rutas de carrito
+app.use('/api/users', UserRouter );       // Rutas de carrito
 app.use('/api/auth', AuthRouter);        // Rutas de autenticación
 
 // Iniciar el servidor

@@ -9,18 +9,21 @@ const UsersProvider = ({children}) => {
 
     const obtenerUsuarios = async () => {
         try {
-            const response = await axios.get("https://e-commerce-adzq.onrender.com/api/admin/");
+            const response = await axios.get("https://e-commerce-adzq.onrender.com/api/users/", {
+                withCredentials: true,
+            });
             setUsuarios(response.data);
         } catch (error) {
-            console.error("Error al obtener usuarios:", error);
-            Swal.fire("¡Error!", "No se pudieron cargar los usuarios", "error");
+            console.error("Error al obtener admins:", error);
+            Swal.fire("¡Error!", "No se pudieron cargar los admins", "error");
         }
     };
 
     const addUsuarioAdmin = async (usuario) => {
         try {
-            usuario.role = 'admin'; // Asignar rol de "admin" por defecto
-            const response = await axios.post("https://e-commerce-adzq.onrender.com/admin/users", usuario);
+            const response = await axios.post("https://e-commerce-adzq.onrender.com/api/users/admin", usuario, {
+                withCredentials: true,
+            });
             setUsuarios((prevUsuarios) => [...prevUsuarios, response.data]);
             Swal.fire("¡Éxito!", "Usuario admin creado correctamente", "success");
         } catch (error) {

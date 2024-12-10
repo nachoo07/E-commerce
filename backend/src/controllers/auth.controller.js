@@ -63,11 +63,6 @@ export const login = async (req, res) => {
         res.status(500).json({ message: 'Error logging in.', error });
     }
 };
-
-/*export const logout = (req, res) => {
-    res.clearCookie('token');
-    res.status(200).send({ message: 'User logged out successfully!' });
-};*/
 export const logout = (req, res) => {
     console.log('Cookies recibidas en el servidor:', req.cookies); // Verifica si llega la cookie 'token'
     console.log('Cookies recibidas:', req.cookies); // Verificar si llega la cookie al servidor
