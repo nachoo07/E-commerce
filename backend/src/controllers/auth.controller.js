@@ -75,7 +75,8 @@ export const logout = (req, res) => {
     res.clearCookie('token', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'Lax',
+        sameSite: 'None',
+        domain: process.env.NODE_ENV === 'production' ? '.e-commerce-adzq.onrender.com' : 'localhost',
     });
 
     res.status(200).json({ message: 'User logged out successfully!' });
