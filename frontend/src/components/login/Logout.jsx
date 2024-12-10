@@ -10,9 +10,8 @@ const Logout = () => {
     const handleLogout = async () => {
         try {
             await axios.post('https://e-commerce-adzq.onrender.com/api/auth/logout', {}, {
-                withCredentials: true,  // Asegúrate de que las cookies se envíen
+                withCredentials: true, // Habilita el envío de cookies
             });
-            logout();
             alert('Logout exitoso');
             navigate('/login'); // Redirigir a la página de login después del logout
         } catch (error) {

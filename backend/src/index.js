@@ -29,7 +29,7 @@ app.use(cookieParser());           // Procesa las cookies en las solicitudes
 // Configura las opciones de CORS para permitir ambos orígenes
 const corsOptions = {
     origin: (origin, callback) => {
-      const allowedOrigins = ['http://localhost:5173', 'https://e-commerce-adzq.onrender.com'];
+      const allowedOrigins = ['http://localhost:5173', 'https://e-commerce-adzq.onrender.com']
       if (allowedOrigins.includes(origin) || !origin) {
         callback(null, true); // Permitir el origen
       } else {
