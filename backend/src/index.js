@@ -48,7 +48,7 @@ app.options('*', cors(corsOptions));
 // Rutas
 app.use('/api/product', ProductRouter);  // Rutas específicas
 app.use('/api/cards', CardRouter);       // Rutas de carrito
-app.use('/api/users', UserRouter );       // Rutas de carrito
+app.use('/api/users', UserRouter );       // Rutas de usuarios
 app.use('/api/auth', AuthRouter);        // Rutas de autenticación
 
 // Iniciar el servidor

@@ -26,7 +26,7 @@ export const register = async (req, res) => {
             username, 
             email, 
             password: hashedPassword, 
-            role: 'Cliente' // Rol predeterminado
+            role: 'user' // Rol predeterminado
         });
         await newUser.save();
 

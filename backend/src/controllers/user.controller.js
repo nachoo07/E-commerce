@@ -26,13 +26,17 @@ export const createAdmin = async (req, res) => {
             username,
             email,
             password: hashedPassword,
-            role: 'admin', // Forzar rol admin
+            role: 'admin',
         });
 
         await newAdmin.save();
         res.status(201).json(newAdmin);
     } catch (error) {
-        res.status(500).send({ message: 'Error creating admin user.', error });
+        console.error('Error creating admin user:', error); // Muestra el error completo en consola
+        res.status(500).json({
+            message: 'Error creating admin user.',
+            error: error.message || error, // Incluye el detalle del error en la respuesta
+        });
     }
 };
 
