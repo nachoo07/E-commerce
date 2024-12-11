@@ -24,8 +24,8 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['user', 'admin'], // Permitir solo estos valores
-        default: 'user' // Por defecto, será "user"
+        enum: ['cliente', 'admin'], // Permitir solo estos valores
+        
     }
 });
 
