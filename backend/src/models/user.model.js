@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
         enum: ['cliente', 'admin'], // Permitir solo estos valores
         
     }
-});
+},{ timestamps: true });
 
 const User = mongoose.model('User', userSchema);
 

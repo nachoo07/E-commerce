@@ -29,7 +29,9 @@ const Register = () => {
         }
     
         try {
-            const response = await axios.post('https://e-commerce-adzq.onrender.com/api/auth/register', { name, username, email, password });
+            const response = await axios.post('https://e-commerce-adzq.onrender.com/api/auth/register', { name, username, email, password }, 
+            { withCredentials: true }
+            );
             alert(response.data.message);
             navigate('/login'); // Redirigir a la página de login después del registro
         } catch (error) {
