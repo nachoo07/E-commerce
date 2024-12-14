@@ -27,13 +27,18 @@ const Register = () => {
             setErrors(errors);
             return;
         }
-
+    
         try {
             const response = await axios.post('https://e-commerce-adzq.onrender.com/api/auth/register', { name, username, email, password });
             alert(response.data.message);
             navigate('/login'); // Redirigir a la página de login después del registro
         } catch (error) {
-            alert(error.response.data.message);
+            // Verificar si hay errores en el array de errores
+            if (error.response?.data?.errors) {
+                alert(error.response.data.errors.map(e => e.msg).join(', '));
+            } else {
+                alert(error.response?.data?.message || 'Error al registrar usuario');
+            }
         }
     };
 

@@ -9,23 +9,26 @@ import ProductsAdmin from '../products/admin/ProductsAdmin';
 import UsersAdmin from '../usuariosAdmin/UsersAdmin';
 import Login from '../login/Login';
 import Register from '../login/Register';
+import PrivateRoute from './PrivateRoute';
 const Routing = () => {
   return (
     <>
-        <Routes>
-            <Route path='/' element={<PageInit/>}/> 
-            <Route path='/admin' element={<AdminPage/>}/> 
-            <Route path='/faqpage' element={<FaqPage/>}/> 
-            <Route path='/product/:id' element={<ProductDetail/>}/> 
-            <Route path='/product' element={<AllProducts/>}/> 
-            <Route path="/ruta1" element={<ProductsAdmin/>} />
-           <Route path="/ruta2" element={<UsersAdmin/>} />
-            <Route path="/ruta4" element={<ProductsAdmin/>} />
-            <Route path="/ruta5" element={<ProductsAdmin/>} />
-            <Route path="/ruta6" element={<ProductsAdmin/>} />
-            <Route path="/login" element={<Login/>} />
-            <Route path="/register" element={<Register />} />
-        </Routes>
+            <Routes>
+        <Route path='/' element={<PageInit />} />
+        <Route path='/faqpage' element={<FaqPage />} />
+        <Route path='/product/:id' element={<ProductDetail />} />
+        <Route path='/product' element={<AllProducts />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        
+        {/* Rutas privadas para administradores */}
+        <Route path='/admin' element={<PrivateRoute><AdminPage /></PrivateRoute>} />
+        <Route path="/ruta1" element={<PrivateRoute><ProductsAdmin /></PrivateRoute>} />
+        <Route path="/ruta2" element={<PrivateRoute><UsersAdmin /></PrivateRoute>} />
+        <Route path="/ruta4" element={<PrivateRoute><ProductsAdmin /></PrivateRoute>} />
+        <Route path="/ruta5" element={<PrivateRoute><ProductsAdmin /></PrivateRoute>} />
+        <Route path="/ruta6" element={<PrivateRoute><ProductsAdmin /></PrivateRoute>} />
+      </Routes>
     </>
   )
 }

@@ -34,7 +34,9 @@ const UsersProvider = ({children}) => {
 
     const updateUsuarioAdmin = async (id, usuarioActualizado) => {
         try {
-            const response = await axios.put(`https://e-commerce-adzq.onrender.com/api/users/admin/${id}`, usuarioActualizado);
+            const response = await axios.put(`https://e-commerce-adzq.onrender.com/api/users/admin/${id}`, usuarioActualizado, {
+                withCredentials: true,
+            });
             setUsuarios((prevUsuarios) =>
                 prevUsuarios.map((usuario) =>
                     usuario._id === id ? response.data : usuario
@@ -61,7 +63,9 @@ const UsersProvider = ({children}) => {
             });
 
             if (confirmacion.isConfirmed) {
-                await axios.delete(`https://e-commerce-adzq.onrender.com/api/users/admin/${id}`);
+                await axios.delete(`https://e-commerce-adzq.onrender.com/api/users/admin/${id}`, {
+                    withCredentials: true,
+                });
                 setUsuarios((prevUsuarios) => prevUsuarios.filter((usuario) => usuario._id !== id));
                 Swal.fire("¡Eliminado!", "Usuario eliminado correctamente", "success");
             }
@@ -78,6 +82,7 @@ const UsersProvider = ({children}) => {
     return (
         <UsersContext.Provider value={{
             usuarios,
+            obtenerUsuarios,
             addUsuarioAdmin,
             updateUsuarioAdmin,
             deleteUsuarioAdmin,

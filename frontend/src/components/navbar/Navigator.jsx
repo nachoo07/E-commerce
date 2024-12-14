@@ -7,13 +7,15 @@ import logo from '../../assets/logo.png';
 import { useState, useEffect, useContext } from 'react';
 import CardIcon from '../carrito/CardIcon/CardIcon';
 import { BsFillPersonFill } from "react-icons/bs";
+import { AuthContext } from "../../context/login/LoginContext";
 import Logout from '../login/Logout';
-
+import axios from 'axios';
 
 const Navigator = () => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoginDrawerOpen, setIsLoginDrawerOpen] = useState(false);
+  const { auth, setAuth } = useContext(AuthContext); // Accede al contexto para obtener y establecer el rol del usuario
 
   const titles = [
     "Consultar Stock - Hay productos que tienen tiempo de elaboración",
@@ -29,9 +31,24 @@ const Navigator = () => {
     return () => clearInterval(interval);
   }, [titles.length]);
 
+  useEffect(() => {
+    // Recupera el rol del usuario desde la cookie cuando la aplicación se cargue
+    const fetchAuth = async () => {
+      try {
+        const response = await axios.get('https://e-commerce-adzq.onrender.com/api/auth/profile', { withCredentials: true });
+        setAuth(response.data.role);
+      } catch (error) {
+        console.error('Error al recuperar el rol del usuario:', error);
+      }
+    };
+
+    fetchAuth();
+  }, [setAuth]);
+
   const toggleLoginDrawer = () => {
     setIsLoginDrawerOpen(!isLoginDrawerOpen);
   };
+
   return (
     <>
       <div className="dynamic-text-bar">
@@ -67,7 +84,14 @@ const Navigator = () => {
               <NavDropdown.Item onClick={() => navigate("/products/plafones")}>Plafones</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link onClick={() => navigate("/faqpage")} className="menu-item">Preguntas Frecuentes</Nav.Link>
-            <Nav.Link onClick={() => navigate("/admin")} className="menu-item">Admin Panel</Nav.Link>
+
+            {/* Renderiza el enlace "Admin Panel" solo si el rol es "admin" */}
+            {auth === "admin" && (
+              <Nav.Link onClick={() => navigate("/admin")} className="menu-item">
+                Admin Panel
+              </Nav.Link>
+            )}
+
             <Nav.Link onClick={() => navigate("/product")} className="menu-item">Promociones</Nav.Link>
             <Nav.Link onClick={() => navigate("/advisory")} className="menu-item">Asesoramiento</Nav.Link>
             <Nav.Link onClick={() => navigate("/contact")} className="menu-item">Contacto</Nav.Link>

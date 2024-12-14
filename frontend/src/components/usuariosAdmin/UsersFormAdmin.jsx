@@ -4,10 +4,12 @@ import '../usuariosAdmin/UsersAdmin.css'
 
 const UserFormAdmin = ({ usuario, handleClose, onSubmit }) => {
     const [formData, setFormData] = useState({
+        name: "",
+        username: "",
         email: "",
         password: "",
-        role: "admin", // Asignar rol de "admin" por defecto
-    });
+        role: "admin", // Rol por defecto
+      });
 
     useEffect(() => {
         if (usuario) {
@@ -37,6 +39,29 @@ const UserFormAdmin = ({ usuario, handleClose, onSubmit }) => {
 
     return (
         <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3">
+  <Form.Label>Nombre</Form.Label>
+  <Form.Control
+    type="text"
+    name="name"
+    value={formData.name}
+    onChange={handleChange}
+    placeholder="Nombre completo"
+    required
+  />
+</Form.Group>
+
+<Form.Group className="mb-3">
+  <Form.Label>Nombre de usuario</Form.Label>
+  <Form.Control
+    type="text"
+    name="username"
+    value={formData.username}
+    onChange={handleChange}
+    placeholder="Nombre de usuario"
+    required
+  />
+</Form.Group>
             <Form.Group className="mb-3">
                 <Form.Label>Correo</Form.Label>
                 <Form.Control

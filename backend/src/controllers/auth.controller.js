@@ -26,7 +26,7 @@ export const register = async (req, res) => {
             username, 
             email, 
             password: hashedPassword, 
-            role: 'user' // Rol predeterminado
+            role: 'cliente' // Rol predeterminado
         });
         await newUser.save();
 
@@ -56,6 +56,7 @@ export const login = async (req, res) => {
             sameSite: 'None', // Asegura compatibilidad entre dominios
             maxAge: 24 * 60 * 60 * 1000, // 1 día
             domain: process.env.NODE_ENV === 'production' ? 'e-commerce-adzq.onrender.com' : 'localhost',
+            path: '/', // Define el path explícitamente
         });
 
         res.status(200).json({ message: 'Login successful', role: user.role });
@@ -64,16 +65,22 @@ export const login = async (req, res) => {
     }
 };
 export const logout = (req, res) => {
-    console.log('Cookies recibidas en el servidor:', req.cookies); // Verifica si llega la cookie 'token'
-    console.log('Cookies recibidas:', req.cookies); // Verificar si llega la cookie al servidor
-    console.log('Token recibido:', req.cookies.token); // Verificar token específico
+    console.log('Cookies recibidas en el servidor:', req.cookies); // Todas las cookies
+    console.log('Token recibido:', req.cookies.token); // La cookie específica
+
+    if (!req.cookies.token) {
+        return res.status(400).json({ message: 'No token found in cookies' });
+    }
+
     res.clearCookie('token', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'None',
         domain: process.env.NODE_ENV === 'production' ? '.e-commerce-adzq.onrender.com' : 'localhost',
+        path: '/', // Define el path explícitamente
     });
 
+    console.log('Cookie token eliminada correctamente');
     res.status(200).json({ message: 'User logged out successfully!' });
 };
 

@@ -62,6 +62,8 @@ const UsersAdmin = () => {
       <Table striped bordered hover>
         <thead>
           <tr>
+            <th>nombre</th>
+            <th>apellido</th>
             <th>Correo</th>
             <th>Rol</th>
             <th>Acciones</th>
@@ -70,6 +72,8 @@ const UsersAdmin = () => {
         <tbody>
           {currentItems.map((usuario) => (
             <tr key={usuario._id}>
+               <td>{usuario.name}</td>
+               <td>{usuario.username}</td>
               <td>{usuario.email}</td>
               <td>{usuario.role}</td>
               <td className='botones-acciones'>
