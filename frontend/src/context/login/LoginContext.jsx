@@ -6,6 +6,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState(null); // Guarda el rol del usuario
     const [userData, setUserData] = useState(null); // Guarda el nombre del usuario
+    const domain = process.env.NODE_ENV === 'production' ? '.e-commerce-adzq.onrender.com' : 'localhost';
 
     useEffect(() => {
         const role = Cookies.get('authRole');
@@ -16,14 +17,14 @@ export const AuthProvider = ({ children }) => {
 
     const login = (role, name) => {
         setAuth(role);
-        setUserData(name); // Guarda el nombre del usuario
-        Cookies.set('authRole', role, { expires: 7 });
-        Cookies.set('authName', name, { expires: 7 }); // Guarda el nombre en las cookies
+        setUserData({ name }); // Guarda el nombre del usuario
+        Cookies.set('authRole', role, { expires: 7, path: '/', domain });
+        Cookies.set('authName', name, { expires: 7, path: '/', domain });
     };
 
     const logout = () => {
         setAuth(null);
-        setUserName(null); // Limpia el nombre del usuario al hacer logout
+        setUserData(null); // Limpia el nombre del usuario al hacer logout
         Cookies.remove('authRole', { path: '/' });
         Cookies.remove('authName', { path: '/' }); // Elimina el nombre de las cookies
     };
