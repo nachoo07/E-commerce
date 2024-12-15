@@ -6,16 +6,14 @@ import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 import { useState, useEffect, useContext } from 'react';
 import CardIcon from '../carrito/CardIcon/CardIcon';
-import { BsFillPersonFill } from "react-icons/bs";
-import { AuthContext } from "../../context/login/LoginContext";
-import Logout from '../login/Logout';
-import axios from 'axios';
+import { AuthContext } from "../../context/login/LoginContext"; // Asegúrate de que el contexto esté bien importado
+import Logout from '../login/Logout'; // Asegúrate de que importas el componente de Logout
 
 const Navigator = () => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoginDrawerOpen, setIsLoginDrawerOpen] = useState(false);
-  const { auth, setAuth } = useContext(AuthContext); // Accede al contexto para obtener y establecer el rol del usuario
+  const { auth, userData } = useContext(AuthContext); // Aquí obtenemos los datos de usuario y autenticación
 
   const titles = [
     "Consultar Stock - Hay productos que tienen tiempo de elaboración",
@@ -30,20 +28,6 @@ const Navigator = () => {
     }, 6000);
     return () => clearInterval(interval);
   }, [titles.length]);
-
-  useEffect(() => {
-    // Recupera el rol del usuario desde la cookie cuando la aplicación se cargue
-    const fetchAuth = async () => {
-      try {
-        const response = await axios.get('https://e-commerce-adzq.onrender.com/api/auth/profile', { withCredentials: true });
-        setAuth(response.data.role);
-      } catch (error) {
-        console.error('Error al recuperar el rol del usuario:', error);
-      }
-    };
-
-    fetchAuth();
-  }, [setAuth]);
 
   const toggleLoginDrawer = () => {
     setIsLoginDrawerOpen(!isLoginDrawerOpen);
@@ -60,7 +44,7 @@ const Navigator = () => {
         <div onClick={() => navigate("/")} className="logo">
           <img src={logo} alt="Logo" className="logo" />
         </div>
-        
+
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -102,8 +86,22 @@ const Navigator = () => {
               <i className="fas fa-search search-icon"></i>
             </div>
             <CardIcon />
-            <BsFillPersonFill size={34} onClick={() => navigate("/login")} style={{ cursor: 'pointer' }}/>
-            <Logout />
+            
+               {/* Si el usuario está logueado */}
+               {auth ? (
+    <NavDropdown title={`Hola, ${userData?.name || 'Usuario'}`} id="basic-nav-dropdown">
+        {auth === "cliente" && (
+            <NavDropdown.Item onClick={() => navigate("/profile")}>
+                Mi Perfil
+            </NavDropdown.Item>
+        )}
+        <Logout />
+    </NavDropdown>
+) : (
+    <Nav.Link onClick={() => navigate("/login")} className="menu-item">
+        Iniciar Sesión
+    </Nav.Link>
+)}
           </div>
         </Navbar.Collapse>
       </Navbar>

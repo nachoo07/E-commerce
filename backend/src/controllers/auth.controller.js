@@ -58,7 +58,14 @@ export const login = async (req, res) => {
             domain: process.env.NODE_ENV === 'production' ? 'e-commerce-adzq.onrender.com' : 'localhost',
             path: '/', // Define el path explícitamente
         });
-
+        res.cookie('authName', user.name, {
+            httpOnly: false, // Puede ser accesible por el cliente para mostrar el nombre
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'None',
+            maxAge: 24 * 60 * 60 * 1000, // 1 día
+            domain: process.env.NODE_ENV === 'production' ? '.e-commerce-adzq.onrender.com' : 'localhost',
+            path: '/', // Define el path explícitamente
+        });
         res.status(200).json({ message: 'Login successful', role: user.role });
     } catch (error) {
         res.status(500).json({ message: 'Error logging in.', error });
@@ -79,8 +86,22 @@ export const logout = (req, res) => {
         domain: process.env.NODE_ENV === 'production' ? '.e-commerce-adzq.onrender.com' : 'localhost',
         path: '/', // Define el path explícitamente
     });
-
-    console.log('Cookie token eliminada correctamente');
+    
+    res.clearCookie('authName', {
+        httpOnly: false,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'None',
+        domain: process.env.NODE_ENV === 'production' ? '.e-commerce-adzq.onrender.com' : 'localhost',
+        path: '/', // Define el path explícitamente
+    });
+    res.clearCookie('authRole', {
+        httpOnly: false,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'None',
+        domain: process.env.NODE_ENV === 'production' ? '.e-commerce-adzq.onrender.com' : 'localhost',
+        path: '/', // Define el path explícitamente
+    });
+    
     res.status(200).json({ message: 'User logged out successfully!' });
 };
 
